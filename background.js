@@ -6,7 +6,17 @@ chrome.browserAction.onClicked.addListener(function(tab) {
       var xhr = new XMLHttpRequest();
       xhr.open("POST", 'https://relay.natwelch.com/hook', true);
       xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.send(`{"url": "${tab.url}"}`);
+      xhr.addEventListener("load", function() {
+        chrome.tabs.highlight({
+          "tabs": tab.index
+        })
+      });
+      xhr.send(JSON.stringify({
+        "url": tab.url,
+        "title": tab.title,
+        "favicon": tab.favIconUrl,
+        "seen": new Date().toJSON()
+      }));
     });
   });
 });
