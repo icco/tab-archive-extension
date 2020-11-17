@@ -3,6 +3,7 @@
   "name": "Tab Archive",
   "version": "0.1",
   "permissions": [
+    "identity",
     "tabs"
   ],
   "background": {
