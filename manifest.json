@@ -3,7 +3,6 @@
   "name": "Tab Archive",
   "version": "0.1",
   "offline_enabled": false,
-  "default_locale": "en",
   "description": "An extension to close your tabs and upload what pages they are on to the cloud.",
   "permissions": [
     "identity",
