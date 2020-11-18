@@ -4,7 +4,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
     chrome.tabs.query({currentWindow: true}, function(tabs) {
       tabs.forEach(function(tab) {
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", 'https://relay.natwelch.com/hook', true);
+        xhr.open("POST", 'https://tabs.natwelch.com/hook', true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.setRequestHeader('Authorization', `Bearer ${token}`);
         xhr.addEventListener("load", function() {
