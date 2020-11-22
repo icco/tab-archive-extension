@@ -1,6 +1,6 @@
 // Called when the user clicks on the browser action.
 chrome.browserAction.onClicked.addListener(function(tab) {
-  chrome.identity.getAuthToken({}, function(token) {
+  chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
     chrome.tabs.query({currentWindow: true}, function(tabs) {
       tabs.forEach(function(tab) {
         var xhr = new XMLHttpRequest();
