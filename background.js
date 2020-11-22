@@ -7,9 +7,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
         xhr.open("POST", 'https://tab-archive.app/hook', true);
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.addEventListener("load", function() {
-          chrome.tabs.highlight({
-            "tabs": tab.index
-          })
+          chrome.tabs.remove(tab.index)
         });
 
         xhr.send(JSON.stringify({
