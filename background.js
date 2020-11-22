@@ -6,6 +6,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
         var xhr = new XMLHttpRequest();
         xhr.open("POST", 'https://tab-archive.app/hook', true);
         xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader('Authorization', `Bearer ${token}`);
         xhr.addEventListener("load", function() {
           chrome.tabs.remove(tab.id)
         });
