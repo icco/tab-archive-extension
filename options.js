@@ -8,7 +8,7 @@ chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
     let ul = document.getElementById('list');
     const resp = xhr.response;
 
-    ul.append(resp.links.map(createLink))
+    ul.append(resp.tabs.map(createLink))
   });
 });
 
