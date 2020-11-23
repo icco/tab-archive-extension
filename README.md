@@ -1,3 +1,3 @@
 # Tab Archive Extension
 
-Check out tab-archive.app for more info!
+Check out https://tab-archive.app for more info!
