@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Tab Archive",
-  "version": "0.1",
+  "version": "0.2",
   "offline_enabled": false,
   "description": "An extension to close your tabs and uploads what pages they are on to the cloud.",
   "permissions": [
@@ -13,6 +13,10 @@
   },
   "browser_action": {
     "default_icon": "icon.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
   },
   "oauth2": {
     "client_id": "172305384164-btta42bf23h342eo59p5h9r3gdrhckcj.apps.googleusercontent.com",
