@@ -1,14 +1,15 @@
-chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", 'https://tab-archive.app/archive', true);
-  xhr.responseType = 'json';
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.setRequestHeader('Authorization', `Bearer ${token}`);
-  xhr.addEventListener("load", function() {
-    let ul = document.getElementById('list');
-    const resp = xhr.response;
-
-    ul.append(resp.tabs.map(createLink))
+document.addEventListener('DOMContentLoaded', function() {
+  chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", 'https://tab-archive.app/archive', true);
+    xhr.responseType = 'json';
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+    xhr.addEventListener("load", function() {
+      let ul = document.getElementById('list');
+      const resp = xhr.response;
+      ul.append(resp.tabs.map(createLink))
+    });
   });
 });
 
