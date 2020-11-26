@@ -11,6 +11,7 @@ function showLinks() {
       const resp = xhr.response;
       ul.append(resp.tabs.map(createLink))
     });
+    xhr.send();
   });
 }
 
