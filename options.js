@@ -9,7 +9,10 @@ function showLinks() {
     xhr.addEventListener("load", function() {
       let ul = document.getElementById('list');
       const resp = xhr.response;
-      ul.append(resp.tabs.map(createLink))
+      resp.tabs.map(createLink).forEach(function(el) {
+        console.log("got element", el)
+        ul.append(el)
+      });
     });
     xhr.send();
   });
