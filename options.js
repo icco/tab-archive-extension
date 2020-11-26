@@ -1,5 +1,6 @@
-document.addEventListener('DOMContentLoaded', function() {
+function showLinks() {
   chrome.identity.getAuthToken({ 'interactive': true }, function(token) {
+    console.log("got token", token)
     var xhr = new XMLHttpRequest();
     xhr.open("GET", 'https://tab-archive.app/archive', true);
     xhr.responseType = 'json';
@@ -11,9 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
       ul.append(resp.tabs.map(createLink))
     });
   });
-});
+}
 
 function createLink(obj) {
+  console.log("got link", obj)
   let li = document.createElement("li");
   li.setAttribute("class", "pv2");
 
@@ -34,3 +36,6 @@ function createLink(obj) {
 
   return li
 }
+
+document.addEventListener('DOMContentLoaded', showLinks);
+document.addEventListener('focus', showLinks);
