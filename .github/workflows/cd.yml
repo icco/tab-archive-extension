@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: thedoctor0/zip-release@master
         with:
-          exclusions: "*.git* /*node_modules/* *rc* *.psb yarn.lock package.json .prettierignore"
+          exclusions: "*.git* /*node_modules/* *rc* *.psb yarn.lock package.json .prettierignore *.sh"
       - name: install
         run: yarn
       - run: yarn webstore upload --source release.zip

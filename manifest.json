@@ -4,14 +4,9 @@
   "version": "2020.11.27-1",
   "offline_enabled": false,
   "description": "An extension to close your tabs and uploads what pages they are on to the cloud.",
-  "permissions": [
-    "identity",
-    "tabs"
-  ],
+  "permissions": ["identity", "tabs"],
   "background": {
-    "scripts": [
-      "background.js"
-    ]
+    "scripts": ["background.js"]
   },
   "browser_action": {
     "default_icon": "icon.png"
