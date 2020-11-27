@@ -12,4 +12,4 @@ jobs:
       - name: install
         run: yarn
       - name: lint
-        run: prettier --check .
+        run: yarn prettier --check .
