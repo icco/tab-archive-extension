@@ -1,15 +1,15 @@
 function showLinks() {
-  chrome.identity.getAuthToken({ interactive: true }, function(token) {
+  chrome.identity.getAuthToken({ interactive: true }, function (token) {
     console.log("got token", token);
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "https://tab-archive.app/archive", true);
     xhr.responseType = "json";
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Authorization", `Bearer ${token}`);
-    xhr.addEventListener("load", function() {
+    xhr.addEventListener("load", function () {
       let ul = document.getElementById("list");
       const resp = xhr.response;
-      resp.tabs.map(createLink).forEach(function(el) {
+      resp.tabs.map(createLink).forEach(function (el) {
         console.log("got element", el);
         ul.append(el);
       });
