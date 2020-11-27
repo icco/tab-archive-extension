@@ -1,5 +1,3 @@
-env: {}
-
 name: CI
 on:
   - pull_request
@@ -19,6 +17,6 @@ jobs:
       - uses: thedoctor0/zip-release@master
         with:
           exclusions: '*.git* /*node_modules/* *rc* *.psb yarn.lock package.json'
-     - uses: actions/upload-artifact@v2
-       with:
-         path: release.zip
+      - uses: actions/upload-artifact@v2
+        with:
+          path: release.zip
