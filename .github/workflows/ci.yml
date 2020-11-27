@@ -18,6 +18,8 @@ jobs:
       - uses: thedoctor0/zip-release@master
         with:
           exclusions: "*.git* /*node_modules/* *rc* *.psb yarn.lock package.json .prettierignore"
+      - name: install
+        run: yarn
       - run: yarn webstore upload --source release.zip
       - uses: actions/upload-artifact@v2
         with:
