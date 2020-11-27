@@ -1,0 +1,24 @@
+name: CD
+on:
+  push:
+    branches:
+      - main
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: thedoctor0/zip-release@master
+        with:
+          exclusions: "*.git* /*node_modules/* *rc* *.psb yarn.lock package.json .prettierignore"
+      - name: install
+        run: yarn
+      - run: yarn webstore upload --source release.zip
+        env:
+          EXTENSION_ID: ${{ secrets.EXTENSION_ID }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+      - uses: actions/upload-artifact@v2
+        with:
+          path: release.zip
