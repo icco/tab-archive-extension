@@ -14,6 +14,7 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: thedoctor0/zip-release@master
         with:
           exclusions: '*.git* /*node_modules/* *rc* *.psb yarn.lock package.json'
