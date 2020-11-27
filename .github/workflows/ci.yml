@@ -11,16 +11,3 @@ jobs:
         run: yarn
       - name: lint
         run: yarn prettier --check .
-  Build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: thedoctor0/zip-release@master
-        with:
-          exclusions: "*.git* /*node_modules/* *rc* *.psb yarn.lock package.json .prettierignore"
-      - name: install
-        run: yarn
-      - run: yarn webstore upload --source release.zip --extension-id $EXTENSION_ID --client-id $CLIENT_ID --client-secret $CLIENT_SECRET --refresh-token $REFRESH_TOKEN
-      - uses: actions/upload-artifact@v2
-        with:
-          path: release.zip
