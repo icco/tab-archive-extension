@@ -20,7 +20,7 @@ jobs:
           exclusions: "*.git* /*node_modules/* *rc* *.psb yarn.lock package.json .prettierignore"
       - name: install
         run: yarn
-      - run: yarn webstore upload --source release.zip
+      - run: yarn webstore upload --source release.zip --extension-id $EXTENSION_ID --client-id $CLIENT_ID --client-secret $CLIENT_SECRET --refresh-token $REFRESH_TOKEN
       - uses: actions/upload-artifact@v2
         with:
           path: release.zip
