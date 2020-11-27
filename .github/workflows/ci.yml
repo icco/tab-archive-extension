@@ -10,4 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: install
+        run: yarn
+      - name: lint
         run: prettier --check .
