@@ -18,7 +18,6 @@ jobs:
     steps:
       - uses: thedoctor0/zip-release@master
         with:
-          filename: 'release.zip'
           exclusions: '*.git* /*node_modules/* *rc* *.psb yarn.lock package.json'
      - uses: actions/upload-artifact@v2
        with:
