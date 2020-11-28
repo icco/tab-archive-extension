@@ -1,13 +1,11 @@
-var key = "urls_to_upload";
-
 function showLinks() {
   let ul = document.getElementById("list");
-  chrome.storage.local.get([key], function (result) {
-    console.log(result)
-    if (result !== undefined) {
-    result.map(createLink).forEach(function (el) {
-      ul.append(el);
-    });
+  chrome.storage.local.get(null, function (result) {
+    console.log(result);
+    for (const [key, t] of Object.entries(object1)) {
+      result.map(createLink).forEach(function (el) {
+        ul.append(el);
+      });
     }
   });
 

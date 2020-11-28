@@ -1,5 +1,3 @@
-var key = "urls_to_upload";
-
 function saveTab(tab) {
   var data = {
     url: tab.url,
@@ -8,11 +6,8 @@ function saveTab(tab) {
     seen: new Date().toJSON(),
   };
 
-  chrome.storage.local.get([key], function (result) {
-    var list = result.push(data);
-    chrome.storage.local.set({ [key]: list }, function () {
-      console.log("saved");
-    });
+  chrome.storage.local.set({ [tab.url]: data }, function () {
+    console.log("saved");
   });
 }
 
@@ -45,15 +40,13 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
     return;
   }
 
-  var uploaded = [];
-  chrome.storage.local.get([key], function (result) {
+  // Get the whole storage
+  chrome.storage.local.get(null, function (result) {
     console.log(result);
-    result.forEach(function (t) {
+    for (const [key, t] of Object.entries(object1)) {
       uploadTab(t);
-      uploaded.push(t);
-    });
 
-    var difference = result.filter((x) => !uploaded.includes(x));
-    chrome.storage.local.set({ [key]: difference });
+      chrome.storage.local.remove(key);
+    }
   });
 });
