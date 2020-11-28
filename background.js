@@ -1,23 +1,4 @@
-// Called when the user clicks on the browser action.
-chrome.browserAction.onClicked.addListener(function (tab) {
-  chrome.tabs.query({ currentWindow: true }, function (tabs) {
-    tabs.forEach(function (tab) {
-      saveTab(tab);
-      chrome.tabs.remove(tab.id);
-    });
-  });
-
-  chrome.runtime.openOptionsPage();
-});
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  console.log(
-    sender.tab
-      ? "from a content script:" + sender.tab.url
-      : "from the extension"
-  );
-  if (request.greeting == "hello") sendResponse({ farewell: "goodbye" });
-});
+var key = 'urls_to_upload';
 
 function saveTab(tab) {
   var data = {
@@ -26,9 +7,11 @@ function saveTab(tab) {
     favicon: tab.favIconUrl,
     seen: new Date().toJSON(),
   };
-  chrome.storage.local.set({ [tab.url]: data }, function () {
-    chrome.runtime.sendMessage({ action: "set" }, function (response) {
-      console.log(response);
+
+  chrome.storage.local.get([key], function(result) {
+    var list = result.push(data)
+    chrome.storage.local.set({ [key]: list}, function () {
+      chrome.runtime.sendMessage({ action: "set" });
     });
   });
 }
@@ -42,3 +25,25 @@ function uploadTab(tab) {
     xhr.send(JSON.stringify(tab));
   });
 }
+
+// Called when the user clicks on the browser action.
+chrome.browserAction.onClicked.addListener(function (tab) {
+  chrome.tabs.query({ currentWindow: true }, function (tabs) {
+    tabs.forEach(function (tab) {
+      saveTab(tab);
+      chrome.tabs.remove(tab.id);
+    });
+  });
+
+  chrome.runtime.openOptionsPage();
+});
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.action == "set") {
+  chrome.storage.local.get([key], function(result) {
+    result.forEach(function (t) {
+      uploadTab(t)
+    })
+  });
+  }
+});
