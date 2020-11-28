@@ -11,7 +11,7 @@ function saveTab(tab) {
   chrome.storage.local.get([key], function (result) {
     var list = result.push(data);
     chrome.storage.local.set({ [key]: list }, function () {
-      chrome.runtime.sendMessage({ action: "set" });
+      console.log("saved");
     });
   });
 }
@@ -47,6 +47,7 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
 
   var uploaded = [];
   chrome.storage.local.get([key], function (result) {
+    console.log(result);
     result.forEach(function (t) {
       uploadTab(t);
       uploaded.push(t);

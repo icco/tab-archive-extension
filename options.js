@@ -1,4 +1,16 @@
+var key = "urls_to_upload";
+
 function showLinks() {
+  let ul = document.getElementById("list");
+  chrome.storage.local.get([key], function (result) {
+    console.log(result)
+    if (result !== undefined) {
+    result.map(createLink).forEach(function (el) {
+      ul.append(el);
+    });
+    }
+  });
+
   chrome.identity.getAuthToken({ interactive: true }, function (token) {
     console.log("got token", token);
     var xhr = new XMLHttpRequest();
@@ -7,10 +19,8 @@ function showLinks() {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Authorization", `Bearer ${token}`);
     xhr.addEventListener("load", function () {
-      let ul = document.getElementById("list");
       const resp = xhr.response;
       resp.tabs.map(createLink).forEach(function (el) {
-        console.log("got element", el);
         ul.append(el);
       });
     });
@@ -19,7 +29,6 @@ function showLinks() {
 }
 
 function createLink(obj) {
-  console.log("got link", obj);
   let li = document.createElement("li");
   li.setAttribute("class", "pv2");
 
