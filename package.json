@@ -13,6 +13,6 @@
   },
   "scripts": {
     "lint": "prettier --write .",
-    "publsh": "webstore upload --extension_id hijjmpfjnehoambihadpebliilognmll --source release.zip"
+    "publish": "webstore upload --extension_id hijjmpfjnehoambihadpebliilognmll --source release.zip"
   }
 }
