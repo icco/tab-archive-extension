@@ -1,6 +1,6 @@
 {
   "name": "tab-archive-extension",
-  "version": "2020.11.27",
+  "version": "2020.11.28",
   "main": "background.js",
   "repository": "git@github.com:icco/tab-archive-extension.git",
   "author": "Nat Welch <nat@natwelch.com>",
