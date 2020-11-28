@@ -38,12 +38,21 @@ chrome.browserAction.onClicked.addListener(function (tab) {
   chrome.runtime.openOptionsPage();
 });
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.action == "set") {
-    chrome.storage.local.get([key], function (result) {
-      result.forEach(function (t) {
-        uploadTab(t);
-      });
-    });
+chrome.alarms.create("upload", { periodInMinutes: 2 });
+
+chrome.alarms.onAlarm.addListener(function (alarm) {
+  if (alarm.name != "upload") {
+    return;
   }
+
+  var uploaded = [];
+  chrome.storage.local.get([key], function (result) {
+    result.forEach(function (t) {
+      uploadTab(t);
+      uploaded.push(t);
+    });
+
+    var difference = result.filter((x) => !uploaded.includes(x));
+    chrome.storage.local.set({ [key]: difference });
+  });
 });
