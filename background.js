@@ -17,6 +17,13 @@ function uploadTab(tab) {
     xhr.open("POST", "https://tab-archive.app/hook", true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    xhr.addEventListener("load", function () {
+      const resp = xhr.response;
+      if (resp.error) {
+        console.error(resp.error);
+        return;
+      }
+    });
     xhr.send(JSON.stringify(tab));
   });
 }

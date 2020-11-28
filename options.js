@@ -17,6 +17,11 @@ function showLinks() {
     xhr.setRequestHeader("Authorization", `Bearer ${token}`);
     xhr.addEventListener("load", function () {
       const resp = xhr.response;
+      if (resp.error) {
+        console.error(resp.error);
+        return;
+      }
+
       resp.tabs.map(createLink).forEach(function (el) {
         ul.append(el);
       });
