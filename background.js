@@ -43,7 +43,7 @@ chrome.alarms.onAlarm.addListener(function (alarm) {
   // Get the whole storage
   chrome.storage.local.get(null, function (result) {
     console.log(result);
-    for (const [key, t] of Object.entries(object1)) {
+    for (const [key, t] of Object.entries(result)) {
       uploadTab(t);
 
       chrome.storage.local.remove(key);

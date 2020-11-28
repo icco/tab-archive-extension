@@ -2,10 +2,9 @@ function showLinks() {
   let ul = document.getElementById("list");
   chrome.storage.local.get(null, function (result) {
     console.log(result);
-    for (const [key, t] of Object.entries(object1)) {
-      result.map(createLink).forEach(function (el) {
-        ul.append(el);
-      });
+    for (const [key, t] of Object.entries(result)) {
+      let el = createLink(t)
+      ul.append(el);
     }
   });
 
