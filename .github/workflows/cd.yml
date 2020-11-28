@@ -13,7 +13,7 @@ jobs:
           exclusions: "*.git* /*node_modules/* *rc* *.psb yarn.lock package.json .prettierignore *.sh"
       - name: install
         run: yarn
-      - run: yarn webstore upload --source release.zip
+      - run: yarn run publish
         env:
           EXTENSION_ID: ${{ secrets.EXTENSION_ID }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
