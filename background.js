@@ -1,4 +1,4 @@
-var key = 'urls_to_upload';
+var key = "urls_to_upload";
 
 function saveTab(tab) {
   var data = {
@@ -8,9 +8,9 @@ function saveTab(tab) {
     seen: new Date().toJSON(),
   };
 
-  chrome.storage.local.get([key], function(result) {
-    var list = result.push(data)
-    chrome.storage.local.set({ [key]: list}, function () {
+  chrome.storage.local.get([key], function (result) {
+    var list = result.push(data);
+    chrome.storage.local.set({ [key]: list }, function () {
       chrome.runtime.sendMessage({ action: "set" });
     });
   });
@@ -40,10 +40,10 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action == "set") {
-  chrome.storage.local.get([key], function(result) {
-    result.forEach(function (t) {
-      uploadTab(t)
-    })
-  });
+    chrome.storage.local.get([key], function (result) {
+      result.forEach(function (t) {
+        uploadTab(t);
+      });
+    });
   }
 });
