@@ -3,7 +3,7 @@ function showLinks() {
   chrome.storage.local.get(null, function (result) {
     console.log(result);
     for (const [key, t] of Object.entries(result)) {
-      let el = createLink(t)
+      let el = createLink(t);
       ul.append(el);
     }
   });
