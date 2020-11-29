@@ -1,7 +1,7 @@
 function showLinks() {
   let ul = document.getElementById("list");
   chrome.storage.local.get(null, function (result) {
-    console.log(result);
+    console.log("got from storage", result);
     for (const [key, t] of Object.entries(result)) {
       let el = createLink(t);
       ul.append(el);
