@@ -1,7 +1,6 @@
 {
   "name": "tab-archive-extension",
-  "version": "2020.11.27",
-  "main": "background.js",
+  "version": "2020.11.28",
   "repository": "git@github.com:icco/tab-archive-extension.git",
   "author": "Nat Welch <nat@natwelch.com>",
   "license": "MIT",
@@ -13,6 +12,7 @@
     "prettier": "^2.2.0"
   },
   "scripts": {
-    "lint": "prettier --write ."
+    "lint": "prettier --write .",
+    "publish": "webstore upload --extension_id hijjmpfjnehoambihadpebliilognmll --source release.zip"
   }
 }

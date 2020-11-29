@@ -1,4 +1,13 @@
 function showLinks() {
+  let ul = document.getElementById("list");
+  chrome.storage.local.get(null, function (result) {
+    console.log(result);
+    for (const [key, t] of Object.entries(result)) {
+      let el = createLink(t);
+      ul.append(el);
+    }
+  });
+
   chrome.identity.getAuthToken({ interactive: true }, function (token) {
     console.log("got token", token);
     var xhr = new XMLHttpRequest();
@@ -7,10 +16,13 @@ function showLinks() {
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Authorization", `Bearer ${token}`);
     xhr.addEventListener("load", function () {
-      let ul = document.getElementById("list");
       const resp = xhr.response;
+      if (resp.error) {
+        console.error(resp.error);
+        return;
+      }
+
       resp.tabs.map(createLink).forEach(function (el) {
-        console.log("got element", el);
         ul.append(el);
       });
     });
@@ -19,7 +31,6 @@ function showLinks() {
 }
 
 function createLink(obj) {
-  console.log("got link", obj);
   let li = document.createElement("li");
   li.setAttribute("class", "pv2");
 
@@ -33,7 +44,7 @@ function createLink(obj) {
 
   let spanSub = document.createElement("span");
   spanSub.setAttribute("class", "db black-60");
-  spanSub.append(obj.seen);
+  spanSub.append(`${obj.seen} &middot; ${obj.url}`);
 
   a.append(spanTitle, spanSub);
   li.append(a);

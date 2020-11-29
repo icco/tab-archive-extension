@@ -1,12 +1,13 @@
 {
   "manifest_version": 2,
   "name": "Tab Archive",
-  "version": "2020.11.27",
-  "offline_enabled": false,
+  "version": "2020.11.28",
+  "offline_enabled": true,
   "description": "An extension to close your tabs and uploads what pages they are on to the cloud.",
-  "permissions": ["identity", "tabs"],
+  "permissions": ["alarms", "identity", "storage", "tabs"],
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js"],
+    "persistent": false
   },
   "browser_action": {
     "default_icon": "icon.png"
