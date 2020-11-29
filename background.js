@@ -23,7 +23,7 @@ function uploadTab(tab) {
         console.error(resp.error);
         return;
       }
-      console.log("uploaded", resp)
+      console.log("uploaded", resp);
     });
     xhr.send(JSON.stringify(tab));
   });
