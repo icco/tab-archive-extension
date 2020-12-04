@@ -12,8 +12,7 @@ function saveTab(tab) {
 }
 
 function uploadTab(tab) {
-  getAccessToken()
-    .then((token) => {
+  getAccessToken().then((token) => {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "https://tab-archive.app/hook", true);
     xhr.setRequestHeader("Content-Type", "application/json");

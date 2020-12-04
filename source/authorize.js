@@ -3,18 +3,16 @@
 const REDIRECT_URL = browser.identity.getRedirectURL();
 const CLIENT_ID = "YOUR-CLIENT-ID";
 const SCOPES = ["openid", "email", "profile"];
-const AUTH_URL =
-`https://accounts.google.com/o/oauth2/auth\
+const AUTH_URL = `https://accounts.google.com/o/oauth2/auth\
 ?client_id=${CLIENT_ID}\
 &response_type=token\
 &redirect_uri=${encodeURIComponent(REDIRECT_URL)}\
-&scope=${encodeURIComponent(SCOPES.join(' '))}`;
-const VALIDATION_BASE_URL="https://www.googleapis.com/oauth2/v3/tokeninfo";
+&scope=${encodeURIComponent(SCOPES.join(" "))}`;
+const VALIDATION_BASE_URL = "https://www.googleapis.com/oauth2/v3/tokeninfo";
 
 function extractAccessToken(redirectUri) {
   let m = redirectUri.match(/[#?](.*)/);
-  if (!m || m.length < 1)
-    return null;
+  if (!m || m.length < 1) return null;
   let params = new URLSearchParams(m[1].split("#")[0]);
   return params.get("access_token");
 }
@@ -38,7 +36,7 @@ function validate(redirectURL) {
   }
   const validationURL = `${VALIDATION_BASE_URL}?access_token=${accessToken}`;
   const validationRequest = new Request(validationURL, {
-    method: "GET"
+    method: "GET",
   });
 
   function checkResponse(response) {
@@ -47,7 +45,7 @@ function validate(redirectURL) {
         reject("Token validation error");
       }
       response.json().then((json) => {
-        if (json.aud && (json.aud === CLIENT_ID)) {
+        if (json.aud && json.aud === CLIENT_ID) {
           resolve(accessToken);
         } else {
           reject("Token validation error");
@@ -67,7 +65,7 @@ an access token.
 function authorize() {
   return browser.identity.launchWebAuthFlow({
     interactive: true,
-    url: AUTH_URL
+    url: AUTH_URL,
   });
 }
 
