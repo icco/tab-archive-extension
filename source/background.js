@@ -1,3 +1,5 @@
+var browser = require("webextension-polyfill");
+
 function saveTab(tab) {
   const data = {
     url: tab.url,
