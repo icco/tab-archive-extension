@@ -6346,18 +6346,6 @@ web-ext@^5.1.0, web-ext@^5.4.0:
     yargs "15.4.1"
     zip-dir "1.0.2"
 
-webext-detect-page@^2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/webext-detect-page/-/webext-detect-page-2.0.5.tgz#132b59bfc4886c548c13c6f1a0fc4aba80603b9c"
-  integrity sha512-yyWDNgR+cb9jpSU5HIt31vMUo4j8E5P4oqQaDsmiToe++uGYnFzhQeyn1r/i3i6CfCO7GkGOr/mCmycS79dJog==
-
-webext-options-sync@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/webext-options-sync/-/webext-options-sync-2.0.0.tgz#0a604d3bffe510b1ec5034484d64b0a24a271e68"
-  integrity sha512-N1GZ4d0ofuy4B5b5svTJVC7ROqGuj0NQD+MFLOofLtVgpR6UjK1wgQjX7G5mUlHFkfEg7lDmxXYgbF+782snfA==
-  dependencies:
-    webext-detect-page "^2.0.5"
-
 webextension-polyfill@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/webextension-polyfill/-/webextension-polyfill-0.7.0.tgz#0df1120ff0266056319ce1a622b09ad8d4a56505"
