@@ -3,6 +3,8 @@ const SizePlugin = require("size-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
+var output = path.join(__dirname, "distribution");
+
 module.exports = {
   devtool: "source-map",
   stats: "errors-only",
@@ -11,7 +13,7 @@ module.exports = {
     options: "./source/options",
   },
   output: {
-    path: path.join(__dirname, "distribution"),
+    path: output,
     filename: "[name].js",
   },
   plugins: [
@@ -22,7 +24,6 @@ module.exports = {
           from: "**/*",
           context: "source",
           globOptions: {
-            gitignore: true,
             ignore: ["*.js"],
           },
         },
