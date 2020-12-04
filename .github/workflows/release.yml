@@ -10,8 +10,8 @@ on:
 jobs:
   Version:
     outputs:
-      created: '${{ steps.daily-version.outputs.created }}'
-      version: '${{ steps.daily-version.outputs.version }}'
+      created: "${{ steps.daily-version.outputs.created }}"
+      version: "${{ steps.daily-version.outputs.version }}"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,7 +26,7 @@ jobs:
       - uses: notlmn/release-with-changelog@v3
         if: steps.daily-version.outputs.created
         with:
-          token: '${{ secrets.GITHUB_TOKEN }}'
+          token: "${{ secrets.GITHUB_TOKEN }}"
           exclude: true
   Submit:
     needs: Version
@@ -47,11 +47,11 @@ jobs:
         run: >-
           npx dot-json distribution/manifest.json version ${{
           needs.Version.outputs.version }}
-      - run: 'npm run release:${{ matrix.command }}'
+      - run: "npm run release:${{ matrix.command }}"
         env:
-          EXTENSION_ID: '${{ secrets.EXTENSION_ID }}'
-          CLIENT_ID: '${{ secrets.CLIENT_ID }}'
-          CLIENT_SECRET: '${{ secrets.CLIENT_SECRET }}'
-          REFRESH_TOKEN: '${{ secrets.REFRESH_TOKEN }}'
-          WEB_EXT_API_KEY: '${{ secrets.WEB_EXT_API_KEY }}'
-          WEB_EXT_API_SECRET: '${{ secrets.WEB_EXT_API_SECRET }}'
+          EXTENSION_ID: "${{ secrets.EXTENSION_ID }}"
+          CLIENT_ID: "${{ secrets.CLIENT_ID }}"
+          CLIENT_SECRET: "${{ secrets.CLIENT_SECRET }}"
+          REFRESH_TOKEN: "${{ secrets.REFRESH_TOKEN }}"
+          WEB_EXT_API_KEY: "${{ secrets.WEB_EXT_API_KEY }}"
+          WEB_EXT_API_SECRET: "${{ secrets.WEB_EXT_API_SECRET }}"

@@ -1,28 +1,28 @@
 function showLinks() {
-  let ul = document.getElementById("list");
-  chrome.storage.local.get(null, function (result) {
+  const ul = document.querySelector("#list");
+  chrome.storage.local.get(null, (result) => {
     console.log("got from storage", result);
     for (const [key, t] of Object.entries(result)) {
-      let el = createLink(t);
+      const el = createLink(t);
       ul.append(el);
     }
   });
 
-  chrome.identity.getAuthToken({ interactive: true }, function (token) {
+  chrome.identity.getAuthToken({ interactive: true }, (token) => {
     console.log("got token", token);
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open("GET", "https://tab-archive.app/archive", true);
     xhr.responseType = "json";
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("Authorization", `Bearer ${token}`);
-    xhr.addEventListener("load", function () {
+    xhr.addEventListener("load", () => {
       const resp = xhr.response;
       if (resp.error) {
         console.error(resp.error);
         return;
       }
 
-      resp.tabs.map(createLink).forEach(function (el) {
+      resp.tabs.map(createLink).forEach((el) => {
         ul.append(el);
       });
     });
@@ -31,18 +31,18 @@ function showLinks() {
 }
 
 function createLink(obj) {
-  let li = document.createElement("li");
+  const li = document.createElement("li");
   li.setAttribute("class", "pv2");
 
-  let a = document.createElement("a");
+  const a = document.createElement("a");
   a.setAttribute("href", obj.url);
   a.setAttribute("class", "link blue lh-title");
 
-  let spanTitle = document.createElement("span");
+  const spanTitle = document.createElement("span");
   spanTitle.setAttribute("class", "fw7 underline-hover");
   spanTitle.append(obj.title);
 
-  let spanSub = document.createElement("span");
+  const spanSub = document.createElement("span");
   spanSub.setAttribute("class", "db black-60");
   spanSub.insertAdjacentHTML("afterbegin", `${obj.seen} &middot; ${obj.url}`);
 
