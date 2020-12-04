@@ -6,13 +6,14 @@ function saveTab(tab) {
     seen: new Date().toJSON(),
   };
 
-  chrome.storage.local.set({ [tab.url]: data }, () => {
+  browser.storage.local.set({ [tab.url]: data }).then(() => {
     console.log("saved");
   });
 }
 
 function uploadTab(tab) {
-  chrome.identity.getAuthToken({ interactive: true }, (token) => {
+  getAccessToken()
+    .then((token) => {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "https://tab-archive.app/hook", true);
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -31,30 +32,30 @@ function uploadTab(tab) {
 }
 
 // Called when the user clicks on the browser action.
-chrome.browserAction.onClicked.addListener((tab) => {
-  chrome.tabs.query({ currentWindow: true }, (tabs) => {
+browser.browserAction.onClicked.addListener((tab) => {
+  browser.tabs.query({ currentWindow: true }).then((tabs) => {
     tabs.forEach((tab) => {
       saveTab(tab);
-      chrome.tabs.remove(tab.id);
+      browser.tabs.remove(tab.id);
     });
   });
 
-  chrome.runtime.openOptionsPage();
+  browser.runtime.openOptionsPage();
 });
 
-chrome.alarms.create("upload", { periodInMinutes: 2 });
+browser.alarms.create("upload", { periodInMinutes: 2 });
 
-chrome.alarms.onAlarm.addListener((alarm) => {
+browser.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name != "upload") {
     return;
   }
 
   // Get the whole storage
-  chrome.storage.local.get(null, (result) => {
+  browser.storage.local.get(null).then((result) => {
     for (const [key, t] of Object.entries(result)) {
       uploadTab(t);
 
-      chrome.storage.local.remove(key);
+      browser.storage.local.remove(key);
     }
   });
 });
