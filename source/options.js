@@ -1,10 +1,12 @@
+const getAccessToken = require("./authorize.js");
+
 function showLinks() {
   const ul = document.querySelector("#list");
   browser.storage.local.get(null).then((result) => {
     console.log("got from storage", result);
-    for (const [key, t] of Object.entries(result)) {
-      const el = createLink(t);
-      ul.append(el);
+    for (const t of Object.values(result)) {
+      const element = createLink(t);
+      ul.append(element);
     }
   });
 
@@ -22,31 +24,35 @@ function showLinks() {
         return;
       }
 
-      resp.tabs.map(createLink).forEach((el) => {
-        ul.append(el);
-      });
+      resp.tabs
+        .map((t) => {
+          return createLink(t);
+        })
+        .forEach((element) => {
+          ul.append(element);
+        });
     });
     xhr.send();
   });
 }
 
-function createLink(obj) {
+function createLink(object) {
   const li = document.createElement("li");
   li.setAttribute("class", "pv2");
 
   const a = document.createElement("a");
-  a.setAttribute("href", obj.url);
+  a.setAttribute("href", object.url);
   a.setAttribute("class", "link blue lh-title");
 
   const spanTitle = document.createElement("span");
   spanTitle.setAttribute("class", "fw7 underline-hover");
-  spanTitle.append(obj.title);
+  spanTitle.append(object.title);
 
   const spanSub = document.createElement("span");
   spanSub.setAttribute("class", "db black-60");
-  spanSub.insertAdjacentText("afterbegin", obj.seen);
+  spanSub.insertAdjacentText("afterbegin", object.seen);
   spanSub.insertAdjacentHTML("afterbegin", ` &middot; `);
-  spanSub.insertAdjacentText("afterbegin", obj.url);
+  spanSub.insertAdjacentText("afterbegin", object.url);
 
   a.append(spanTitle, spanSub);
   li.append(a);
