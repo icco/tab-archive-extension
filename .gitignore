@@ -1,3 +1,5 @@
+.env
+distribution
 node_modules
 package-lock.json
-.env
+yarn.lock
