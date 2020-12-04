@@ -1,8 +1,10 @@
+const getAccessToken = require("./authorize.js");
+
 function showLinks() {
   const ul = document.querySelector("#list");
   browser.storage.local.get(null).then((result) => {
     console.log("got from storage", result);
-    for (const [key, t] of Object.entries(result)) {
+    for (const t of Object.values(result)) {
       const element = createLink(t);
       ul.append(element);
     }
@@ -22,9 +24,13 @@ function showLinks() {
         return;
       }
 
-      resp.tabs.map(createLink).forEach((element) => {
-        ul.append(element);
-      });
+      resp.tabs
+        .map((t) => {
+          return createLink(t);
+        })
+        .forEach((element) => {
+          ul.append(element);
+        });
     });
     xhr.send();
   });

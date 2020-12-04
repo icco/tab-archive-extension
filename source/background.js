@@ -34,7 +34,7 @@ function uploadTab(tab) {
 }
 
 // Called when the user clicks on the browser action.
-browser.browserAction.onClicked.addListener((tab) => {
+browser.browserAction.onClicked.addListener((_tab) => {
   browser.tabs.query({currentWindow: true}).then((tabs) => {
     tabs.forEach((tab) => {
       saveTab(tab);

@@ -35,7 +35,7 @@ it seems to be "aud".
 function validate(redirectURL) {
   const accessToken = extractAccessToken(redirectURL);
   if (!accessToken) {
-    throw "Authorization failure";
+    throw new Error("Authorization failure");
   }
 
   const validationURL = `${VALIDATION_BASE_URL}?access_token=${accessToken}`;
@@ -46,14 +46,14 @@ function validate(redirectURL) {
   function checkResponse(response) {
     return new Promise((resolve, reject) => {
       if (response.status !== 200) {
-        reject("Token validation error");
+        reject(new Error("Token validation error"));
       }
 
       response.json().then((json) => {
         if (json.aud && json.aud === CLIENT_ID) {
           resolve(accessToken);
         } else {
-          reject("Token validation error");
+          reject(new Error("Token validation error"));
         }
       });
     });
