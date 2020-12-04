@@ -44,7 +44,9 @@ function createLink(obj) {
 
   const spanSub = document.createElement("span");
   spanSub.setAttribute("class", "db black-60");
-  spanSub.insertAdjacentHTML("afterbegin", `${obj.seen} &middot; ${obj.url}`);
+  spanSub.insertAdjacentText("afterbegin", obj.seen);
+  spanSub.insertAdjacentHTML("afterbegin", ` &middot; `);
+  spanSub.insertAdjacentText("afterbegin", obj.url);
 
   a.append(spanTitle, spanSub);
   li.append(a);
