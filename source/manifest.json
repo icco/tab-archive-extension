@@ -16,7 +16,6 @@
   },
   "permissions": ["alarms", "identity", "storage", "tabs"],
   "options_ui": {
-    "chrome_style": true,
     "open_in_tab": true,
     "page": "options.html"
   },
