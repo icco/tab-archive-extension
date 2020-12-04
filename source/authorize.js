@@ -1,8 +1,13 @@
 /* exported getAccessToken */
 
 const REDIRECT_URL = browser.identity.getRedirectURL();
-const CLIENT_ID = "YOUR-CLIENT-ID";
-const SCOPES = ["openid", "email", "profile"];
+const CLIENT_ID =
+  "172305384164-btta42bf23h342eo59p5h9r3gdrhckcj.apps.googleusercontent.com";
+const SCOPES = [
+  "openid",
+  "https://www.googleapis.com/auth/userinfo.profile",
+  "https://www.googleapis.com/auth/userinfo.email",
+];
 const AUTH_URL = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(
   REDIRECT_URL
 )}&scope=${encodeURIComponent(SCOPES.join(" "))}`;
