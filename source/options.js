@@ -1,22 +1,56 @@
-import optionsStorage from './options-storage';
+function showLinks() {
+  let ul = document.getElementById("list");
+  chrome.storage.local.get(null, function (result) {
+    console.log("got from storage", result);
+    for (const [key, t] of Object.entries(result)) {
+      let el = createLink(t);
+      ul.append(el);
+    }
+  });
 
-optionsStorage.syncForm('#options-form');
+  chrome.identity.getAuthToken({ interactive: true }, function (token) {
+    console.log("got token", token);
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://tab-archive.app/archive", true);
+    xhr.responseType = "json";
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    xhr.addEventListener("load", function () {
+      const resp = xhr.response;
+      if (resp.error) {
+        console.error(resp.error);
+        return;
+      }
 
-const rangeInputs = [...document.querySelectorAll('input[type="range"][name^="color"]')];
-const numberInputs = [...document.querySelectorAll('input[type="number"][name^="color"]')];
-const output = document.querySelector('.color-output');
-
-function updateColor() {
-	output.style.backgroundColor = `rgb(${rangeInputs[0].value}, ${rangeInputs[1].value}, ${rangeInputs[2].value})`;
+      resp.tabs.map(createLink).forEach(function (el) {
+        ul.append(el);
+      });
+    });
+    xhr.send();
+  });
 }
 
-function updateInputField(event) {
-	numberInputs[rangeInputs.indexOf(event.currentTarget)].value = event.currentTarget.value;
+function createLink(obj) {
+  let li = document.createElement("li");
+  li.setAttribute("class", "pv2");
+
+  let a = document.createElement("a");
+  a.setAttribute("href", obj.url);
+  a.setAttribute("class", "link blue lh-title");
+
+  let spanTitle = document.createElement("span");
+  spanTitle.setAttribute("class", "fw7 underline-hover");
+  spanTitle.append(obj.title);
+
+  let spanSub = document.createElement("span");
+  spanSub.setAttribute("class", "db black-60");
+  spanSub.insertAdjacentHTML("afterbegin", `${obj.seen} &middot; ${obj.url}`);
+
+  a.append(spanTitle, spanSub);
+  li.append(a);
+
+  return li;
 }
 
-for (const input of rangeInputs) {
-	input.addEventListener('input', updateColor);
-	input.addEventListener('input', updateInputField);
-}
-
-window.addEventListener('load', updateColor);
+document.addEventListener("DOMContentLoaded", showLinks);
+document.addEventListener("focus", showLinks);

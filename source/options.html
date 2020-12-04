@@ -1,32 +1,21 @@
-<!doctype html>
-<meta charset="utf-8">
-<title>Options</title>
-<link rel="stylesheet" href="chrome://global/skin/in-content/common.css">
-<link rel="stylesheet" href="options.css">
+<!DOCTYPE html>
+<html lang="en">
+  <title>Tab Archive</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="tachyons.min.css" />
+  <body>
+    <article class="pa3 pa5-ns">
+      <h1 class="f3 f1-m f-headline-l">Tab Archive</h1>
 
-<form id="options-form" class="detail-view-container">
-	<h3>Color Previewer</h3>
-	<div class="color-picker">
-		<div class="color-inputs">
-			<label class="color-input">
-				<span>R</span>
-				<input type="range" min="0" max="255" name="colorRed">
-				<input type="number" name="colorRed" min="0" max="255">
-			</label>
-			<label class="color-input">
-				<span>G</span>
-				<input type="range" min="0" max="255" name="colorGreen">
-				<input type="number" name="colorGreen" min="0" max="255">
-			</label>
-			<label class="color-input">
-				<span>B</span>
-				<input type="range" min="0" max="255" name="colorBlue">
-				<input type="number" name="colorBlue" min="0" max="255">
-			</label>
-		</div>
-		<div class="color-output"></div>
-	</div>
-</form>
+      <p class="measure lh-copy">
+        Your tabs from most recent to oldest. If recently closed tabs aren't
+        here, refresh! For more information, see
+        <a class="link blue" href="https://tab-archive.app">tab-archive.app</a>.
+      </p>
 
-<script src="browser-polyfill.min.js"></script>
-<script src="options.js"></script>
+      <ul class="list f6 pl0 mt3 mb0" id="list"></ul>
+    </article>
+
+    <script src="options.js"></script>
+  </body>
+</html>
