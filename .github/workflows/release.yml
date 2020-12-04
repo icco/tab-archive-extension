@@ -6,7 +6,7 @@ name: Release
 on:
   workflow_dispatch: null
   schedule:
-    - cron: 31 12 * * 6
+    - cron: 31 22 * * *
 jobs:
   Version:
     outputs:
