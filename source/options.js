@@ -1,6 +1,6 @@
 function showLinks() {
   const ul = document.querySelector("#list");
-  browser.storage.local.get(null).then( (result) => {
+  browser.storage.local.get(null).then((result) => {
     console.log("got from storage", result);
     for (const [key, t] of Object.entries(result)) {
       const el = createLink(t);
