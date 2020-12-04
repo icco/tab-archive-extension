@@ -1,3 +1,6 @@
+.env
+distribution
 node_modules
 package-lock.json
-.env
+size-plugin.json
+yarn.lock
