@@ -1,4 +1,5 @@
-const browser = require('webextension-polyfill');
+const browser = require("webextension-polyfill");
+const getAccessToken = require("./authorize.js");
 
 function saveTab(tab) {
   const data = {
@@ -9,24 +10,24 @@ function saveTab(tab) {
   };
 
   browser.storage.local.set({[tab.url]: data}).then(() => {
-    console.log('saved');
+    console.log("saved");
   });
 }
 
 function uploadTab(tab) {
   getAccessToken().then((token) => {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://tab-archive.app/hook', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.setRequestHeader('Authorization', `Bearer ${token}`);
-    xhr.addEventListener('load', () => {
+    xhr.open("POST", "https://tab-archive.app/hook", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+    xhr.addEventListener("load", () => {
       const resp = xhr.response;
       if (resp.error) {
         console.error(resp.error);
         return;
       }
 
-      console.log('uploaded', resp);
+      console.log("uploaded", resp);
     });
     xhr.send(JSON.stringify(tab));
   });
@@ -44,10 +45,10 @@ browser.browserAction.onClicked.addListener((tab) => {
   browser.runtime.openOptionsPage();
 });
 
-browser.alarms.create('upload', {periodInMinutes: 2});
+browser.alarms.create("upload", {periodInMinutes: 2});
 
 browser.alarms.onAlarm.addListener((alarm) => {
-  if (alarm.name !== 'upload') {
+  if (alarm.name !== "upload") {
     return;
   }
 

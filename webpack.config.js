@@ -1,35 +1,35 @@
-const path = require('path');
-const SizePlugin = require('size-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+const path = require("path");
+const SizePlugin = require("size-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
-const output = path.join(__dirname, 'distribution');
+const output = path.join(__dirname, "distribution");
 
 module.exports = {
-  devtool: 'source-map',
-  stats: 'errors-only',
+  devtool: "source-map",
+  stats: "errors-only",
   entry: {
-    background: './source/background',
-    options: './source/options'
+    background: "./source/background",
+    options: "./source/options"
   },
   output: {
     path: output,
-    filename: '[name].js'
+    filename: "[name].js"
   },
   plugins: [
     new SizePlugin(),
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: '**/*',
-          context: 'source',
+          from: "**/*",
+          context: "source",
           globOptions: {
-            ignore: ['*.js']
+            ignore: ["*.js"]
           }
         },
         {
           from:
-            'node_modules/webextension-polyfill/dist/browser-polyfill.min.js'
+            "node_modules/webextension-polyfill/dist/browser-polyfill.min.js"
         }
       ]
     })
