@@ -1,6 +1,6 @@
 function showLinks() {
   const ul = document.querySelector("#list");
-  chrome.storage.local.get(null, (result) => {
+  browser.storage.local.get(null).then( (result) => {
     console.log("got from storage", result);
     for (const [key, t] of Object.entries(result)) {
       const el = createLink(t);
@@ -8,7 +8,7 @@ function showLinks() {
     }
   });
 
-  chrome.identity.getAuthToken({ interactive: true }, (token) => {
+  getAccessToken().then((token) => {
     console.log("got token", token);
     const xhr = new XMLHttpRequest();
     xhr.open("GET", "https://tab-archive.app/archive", true);
