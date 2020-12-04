@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "webpack --mode=production",
-    "release:chrome": "cd distribution && webstore upload --auto-publish",
+    "release:chrome": "cd distribution && webstore upload --auto-publish --extension_id hijjmpfjnehoambihadpebliilognmll",
     "release:firefox": "cd distribution && web-ext-submit",
     "lint": "prettier --write .",
     "test": "run-s lint build",

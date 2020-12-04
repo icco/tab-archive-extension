@@ -1,1 +1,30 @@
-[{"timestamp":1607051171187,"files":[{"filename":"background.js","previous":0,"size":705,"diff":705},{"filename":"options.js","previous":0,"size":749,"diff":749},{"filename":"content.js","previous":0,"size":239,"diff":239},{"filename":"options-storage.js","previous":0,"size":173,"diff":173},{"filename":"options.css","previous":0,"size":439,"diff":439},{"filename":"options.html","previous":0,"size":406,"diff":406},{"filename":"tachyons.min.css","previous":0,"size":13113,"diff":13113},{"filename":"browser-polyfill.min.js","previous":0,"size":3405,"diff":3405}]}]
+[
+  {
+    "timestamp": 1607051171187,
+    "files": [
+      { "filename": "background.js", "previous": 0, "size": 705, "diff": 705 },
+      { "filename": "options.js", "previous": 0, "size": 749, "diff": 749 },
+      { "filename": "content.js", "previous": 0, "size": 239, "diff": 239 },
+      {
+        "filename": "options-storage.js",
+        "previous": 0,
+        "size": 173,
+        "diff": 173
+      },
+      { "filename": "options.css", "previous": 0, "size": 439, "diff": 439 },
+      { "filename": "options.html", "previous": 0, "size": 406, "diff": 406 },
+      {
+        "filename": "tachyons.min.css",
+        "previous": 0,
+        "size": 13113,
+        "diff": 13113
+      },
+      {
+        "filename": "browser-polyfill.min.js",
+        "previous": 0,
+        "size": 3405,
+        "diff": 3405
+      }
+    ]
+  }
+]
