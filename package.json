@@ -4,10 +4,10 @@
     "build": "webpack --mode=production",
     "release:chrome": "cd distribution && webstore upload --auto-publish --extension_id hijjmpfjnehoambihadpebliilognmll",
     "release:firefox": "cd distribution && web-ext-submit",
-    		"lint": "run-p lint:*",
-		"lint-fix": "run-p 'lint:* -- --fix'",
-		"lint:css": "stylelint source/**/*.css",
-		"lint:js": "xo",
+    "lint": "run-p lint:*",
+    "lint-fix": "run-p 'lint:* --fix'",
+    "lint:css": "stylelint source/**/*.css",
+    "lint:js": "xo",
     "test": "xo && run-s lint build",
     "watch": "webpack --mode=development --watch"
   },
@@ -20,13 +20,15 @@
     ],
     "ignores": [
       "distribution"
-    ] ,
-    "prettier": true
+    ],
+    "prettier": true,
+    "space": true
   },
   "stylelint": {
     "extends": "stylelint-config-xo"
   },
   "dependencies": {
+    "path": "^0.12.7",
     "webextension-polyfill": "^0.7.0"
   },
   "devDependencies": {

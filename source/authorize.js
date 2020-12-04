@@ -2,22 +2,22 @@
 
 const REDIRECT_URL = browser.identity.getRedirectURL();
 const CLIENT_ID =
-  "172305384164-btta42bf23h342eo59p5h9r3gdrhckcj.apps.googleusercontent.com";
+  '172305384164-btta42bf23h342eo59p5h9r3gdrhckcj.apps.googleusercontent.com';
 const SCOPES = [
-  "openid",
-  "https://www.googleapis.com/auth/userinfo.profile",
-  "https://www.googleapis.com/auth/userinfo.email",
+  'openid',
+  'https://www.googleapis.com/auth/userinfo.profile',
+  'https://www.googleapis.com/auth/userinfo.email'
 ];
 const AUTH_URL = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(
   REDIRECT_URL
-)}&scope=${encodeURIComponent(SCOPES.join(" "))}`;
-const VALIDATION_BASE_URL = "https://www.googleapis.com/oauth2/v3/tokeninfo";
+)}&scope=${encodeURIComponent(SCOPES.join(' '))}`;
+const VALIDATION_BASE_URL = 'https://www.googleapis.com/oauth2/v3/tokeninfo';
 
 function extractAccessToken(redirectUri) {
-  let m = redirectUri.match(/[#?](.*)/);
-  if (!m || m.length < 1) return null;
-  let params = new URLSearchParams(m[1].split("#")[0]);
-  return params.get("access_token");
+  const m = redirectUri.match(/[#?](.*)/);
+  if (!m || m.length === 0) return null;
+  const parameters = new URLSearchParams(m[1].split('#')[0]);
+  return parameters.get('access_token');
 }
 
 /**
@@ -35,23 +35,25 @@ it seems to be "aud".
 function validate(redirectURL) {
   const accessToken = extractAccessToken(redirectURL);
   if (!accessToken) {
-    throw "Authorization failure";
+    throw 'Authorization failure';
   }
+
   const validationURL = `${VALIDATION_BASE_URL}?access_token=${accessToken}`;
   const validationRequest = new Request(validationURL, {
-    method: "GET",
+    method: 'GET'
   });
 
   function checkResponse(response) {
     return new Promise((resolve, reject) => {
-      if (response.status != 200) {
-        reject("Token validation error");
+      if (response.status !== 200) {
+        reject('Token validation error');
       }
+
       response.json().then((json) => {
         if (json.aud && json.aud === CLIENT_ID) {
           resolve(accessToken);
         } else {
-          reject("Token validation error");
+          reject('Token validation error');
         }
       });
     });
@@ -68,7 +70,7 @@ an access token.
 function authorize() {
   return browser.identity.launchWebAuthFlow({
     interactive: true,
-    url: AUTH_URL,
+    url: AUTH_URL
   });
 }
 
