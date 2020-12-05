@@ -1,5 +1,5 @@
-import {browserActionListener, alarmListener} from "./tabs.js"
-import browser from "webextension-polyfill"
+import {browserActionListener, alarmListener} from "./tabs";
+import browser from "webextension-polyfill";
 
 browser.alarms.create("upload", {periodInMinutes: 2});
 

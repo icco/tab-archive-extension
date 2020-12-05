@@ -9,7 +9,7 @@ module.exports = {
   devtool: "source-map",
   entry: {
     background: "./source/background.js",
-    options: "./source/options.js",
+    options: "./source/options.js"
   },
   output: {
     path: output,

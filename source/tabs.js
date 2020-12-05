@@ -1,5 +1,5 @@
-import browser from "webextension-polyfill"
-import {getAccessToken} from "./authorize.js"
+import browser from "webextension-polyfill";
+import {getAccessToken} from "./authorize";
 
 function saveTab(tab) {
   const data = {
@@ -46,7 +46,6 @@ export function alarmListener(alarm) {
       browser.storage.local.remove(key);
     }
   });
-
 }
 
 export function browserActionListener(_tab) {
