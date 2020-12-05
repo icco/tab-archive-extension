@@ -1,5 +1,5 @@
 import browser from "webextension-polyfill"
-import getAccessToken from "./authorize.js"
+import {getAccessToken} from "./authorize.js"
 
 function saveTab(tab) {
   const data = {
