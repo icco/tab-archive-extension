@@ -1,4 +1,3 @@
-/* exported getAccessToken */
 const REDIRECT_URL = browser.identity.getRedirectURL();
 const CLIENT_ID =
   "172305384164-btta42bf23h342eo59p5h9r3gdrhckcj.apps.googleusercontent.com";
@@ -10,11 +9,12 @@ const SCOPES = [
 const AUTH_URL = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_ID}&response_type=token&redirect_uri=${encodeURIComponent(
   REDIRECT_URL
 )}&scope=${encodeURIComponent(SCOPES.join(" "))}`;
-console.log(AUTH_URL);
 const VALIDATION_BASE_URL = "https://www.googleapis.com/oauth2/v3/tokeninfo";
 
+console.log(AUTH_URL);
+console.log(REDIRECT_URL);
+
 function extractAccessToken(redirectUri) {
-  console.log(redirectUri);
   const m = redirectUri.match(/[#?](.*)/);
   if (!m || m.length === 0) return null;
   const parameters = new URLSearchParams(m[1].split("#")[0]);
