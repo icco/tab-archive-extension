@@ -7,10 +7,9 @@ const output = path.join(__dirname, "distribution");
 
 module.exports = {
   devtool: "source-map",
-  stats: "errors-only",
   entry: {
-    background: "./source/background",
-    options: "./source/options"
+    background: "./source/background.js",
+    options: "./source/options.js",
   },
   output: {
     path: output,

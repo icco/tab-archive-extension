@@ -1,4 +1,4 @@
-const getAccessToken = require("./authorize.js");
+import { getAccessToken } from "./authorize.js";
 
 function showLinks() {
   const ul = document.querySelector("#list");

@@ -21,7 +21,7 @@
   },
   "background": {
     "persistent": false,
-    "scripts": ["browser-polyfill.min.js", "authorize.js", "background.js"]
+    "scripts": ["background.js"]
   },
   "oauth2": {
     "client_id": "172305384164-btta42bf23h342eo59p5h9r3gdrhckcj.apps.googleusercontent.com",
