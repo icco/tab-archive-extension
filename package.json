@@ -7,9 +7,11 @@
     "lint": "run-p lint:*",
     "lint-fix": "run-p 'lint:* --fix'",
     "lint:css": "stylelint source/**/*.css",
+    "lint:manifest": "run-s build 'web-ext lint -s distribution'",
     "lint:js": "xo",
     "test": "run-s lint build",
-    "watch": "webpack --mode=development --watch"
+    "watch": "webpack --mode=development --watch",
+    "web-ext": "web-ext"
   },
   "xo": {
     "envs": [
