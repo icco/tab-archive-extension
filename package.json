@@ -8,7 +8,7 @@
     "lint-fix": "run-p 'lint:* --fix'",
     "lint:css": "stylelint source/**/*.css",
     "lint:js": "xo",
-    "test": "xo && run-s lint build",
+    "test": "run-s lint build",
     "watch": "webpack --mode=development --watch"
   },
   "xo": {
