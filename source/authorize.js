@@ -1,4 +1,7 @@
+import browser from "webextension-polyfill";
+
 const REDIRECT_URL = browser.identity.getRedirectURL();
+console.log(REDIRECT_URL);
 const CLIENT_ID =
   "172305384164-g24il7spqciqpnah3l2f5q84fevt7t3d.apps.googleusercontent.com";
 const SCOPES = [
@@ -10,9 +13,6 @@ const AUTH_URL = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_I
   REDIRECT_URL
 )}&scope=${encodeURIComponent(SCOPES.join(" "))}`;
 const VALIDATION_BASE_URL = "https://www.googleapis.com/oauth2/v3/tokeninfo";
-
-console.log(AUTH_URL);
-console.log(REDIRECT_URL);
 
 function extractAccessToken(redirectUri) {
   const m = redirectUri.match(/[#?](.*)/);

@@ -5,17 +5,15 @@
     "release:chrome": "cd distribution && webstore upload --auto-publish --extension_id hijjmpfjnehoambihadpebliilognmll",
     "release:firefox": "cd distribution && web-ext-submit",
     "lint": "run-p lint:*",
-    "lint-fix": "run-p 'lint:* --fix'",
-    "lint:css": "stylelint source/**/*.css",
-    "lint:js": "xo",
-    "test": "xo && run-s lint build",
-    "watch": "webpack --mode=development --watch"
+    "lint:css": "stylelint --fix source/**/*.css",
+    "lint:manifest": "run-s build 'web-ext lint -s distribution'",
+    "lint:js": "xo --fix",
+    "test": "run-s lint build",
+    "watch": "webpack --mode=development --watch",
+    "web-ext": "web-ext"
   },
   "xo": {
     "envs": [
-      "browser"
-    ],
-    "globals": [
       "browser"
     ],
     "ignores": [
