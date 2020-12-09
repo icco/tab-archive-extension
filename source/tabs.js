@@ -1,5 +1,6 @@
 import browser from "webextension-polyfill";
 import {getAccessToken} from "./authorize";
+import {canSync} from "./config";
 
 function saveTab(tab) {
   const data = {
@@ -15,6 +16,7 @@ function saveTab(tab) {
 }
 
 function uploadTab(tab) {
+  if (canSync()) {
   getAccessToken().then((token) => {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "https://tab-archive.app/hook", true);
@@ -31,6 +33,7 @@ function uploadTab(tab) {
     });
     xhr.send(JSON.stringify(tab));
   });
+  }
 }
 
 export function alarmListener(alarm) {

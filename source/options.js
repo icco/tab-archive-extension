@@ -1,5 +1,15 @@
 import browser from "webextension-polyfill";
 import {getAccessToken} from "./authorize";
+import {canSync,setConfigOption} from "./config";
+
+function collectConsent() {
+  let sync = document.querySelector("sync")
+  sync.checked = canSync()
+  sync.addEventListener('change', (event) => {
+    console.log(event.target);
+    setConfigOption("sync", event.target.checked)
+  });
+}
 
 function showLinks() {
   const ul = document.querySelector("#list");
@@ -61,5 +71,9 @@ function createLink(object) {
   return li;
 }
 
-document.addEventListener("DOMContentLoaded", showLinks);
-document.addEventListener("focus", showLinks);
+function onLoad() {
+  collectConsent();
+  showLinks();
+}
+
+document.addEventListener("DOMContentLoaded", onLoad);
