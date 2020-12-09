@@ -10,7 +10,7 @@ function saveTab(tab) {
     seen: new Date().toJSON()
   };
 
-  console.log("saving", data)
+  console.log("saving", data);
   browser.storage.local.set({[tab.url]: data}).then(() => {
     console.log("saved");
   });
@@ -43,11 +43,11 @@ export function alarmListener(alarm) {
   }
 
   // Get the whole storage
-  browser.storage.local.get(null).then(async (result) => {
+  browser.storage.local.get(null).then((result) => {
     for (const [key, t] of Object.entries(result)) {
-      await uploadTab(t);
-
-      browser.storage.local.remove(key);
+      uploadTab(t).then(() => {
+        browser.storage.local.remove(key);
+      });
     }
   });
 }

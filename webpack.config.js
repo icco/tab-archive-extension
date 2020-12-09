@@ -25,7 +25,7 @@ module.exports = {
           globOptions: {
             ignore: ["*.js"]
           }
-        },
+        }
       ]
     })
   ],
