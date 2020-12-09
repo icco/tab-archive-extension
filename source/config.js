@@ -13,9 +13,7 @@ export async function canSync() {
 }
 
 export async function getConfig() {
-  browser.storage.sync.get(configKey).then((result) => {
-    return result;
-  });
+  return browser.storage.sync.get(configKey);
 }
 
 export async function setConfigOption(key, value) {
