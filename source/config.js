@@ -10,7 +10,7 @@ export async function canSync() {
     return false;
   }
 
-  return config[configKey].sync
+  return config[configKey].sync;
 }
 
 export async function getConfig() {
@@ -22,6 +22,7 @@ export async function setConfigOption(key, value) {
   if (!config) {
     config = {};
   }
+
   if (!config[configKey]) {
     config[configKey] = {};
   }
