@@ -3,14 +3,19 @@ import browser from "webextension-polyfill";
 const configKey = "tab-archive-config";
 
 export async function canSync() {
-  const config = await getConfig();
-  console.log("got config", config);
-  if (!config || !config[configKey] || !config[configKey].sync) {
-    setConfigOption("sync", false);
+  try {
+    const config = await getConfig();
+    console.log("got config", config);
+    if (!config || !config[configKey] || !config[configKey].sync) {
+      await setConfigOption("sync", false);
+      return false;
+    }
+
+    return config[configKey].sync;
+  } catch (error) {
+    console.error("cansync", error);
     return false;
   }
-
-  return config[configKey].sync;
 }
 
 export async function getConfig() {
