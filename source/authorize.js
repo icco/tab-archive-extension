@@ -1,6 +1,7 @@
 import browser from "webextension-polyfill";
 
 const REDIRECT_URL = browser.identity.getRedirectURL();
+console.log(REDIRECT_URL)
 const CLIENT_ID =
   "172305384164-btta42bf23h342eo59p5h9r3gdrhckcj.apps.googleusercontent.com";
 const SCOPES = [
