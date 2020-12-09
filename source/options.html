@@ -2,11 +2,24 @@
 <html lang="en">
   <title>Tab Archive</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta charset="utf-8" />
   <link rel="stylesheet" href="tachyons.min.css" />
   <link rel="stylesheet" href="options.css" />
   <body>
     <article class="pa3 pa5-ns">
       <h1 class="f3 f1-m f-headline-l">Tab Archive</h1>
+
+      <div class="pa4-l">
+        <form class="bg-light-red mw7 pa4 br2-ns ba b--black-10">
+          <fieldset class="cf bn ma0 pa0">
+            <legend class="pa0 f4 f3-ns mb3 black-80">Settings</legend>
+            <div class="flex items-center mb2">
+              <input class="mr2" type="checkbox" id="sync" value="sync">
+              <label for="sync" class="lh-copy">Sync your data to Tab Archive servers?</label>
+            </div>
+          </fieldset>
+        </form>
+      </div>
 
       <p class="measure lh-copy">
         Your tabs from most recent to oldest. If recently closed tabs aren't

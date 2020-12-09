@@ -1,5 +1,6 @@
 import browser from "webextension-polyfill";
 import {getAccessToken} from "./authorize";
+import {canSync, configKey} from "./config";
 
 function saveTab(tab) {
   const data = {
@@ -9,28 +10,31 @@ function saveTab(tab) {
     seen: new Date().toJSON()
   };
 
+  console.log("saving", data);
   browser.storage.local.set({[tab.url]: data}).then(() => {
     console.log("saved");
   });
 }
 
-function uploadTab(tab) {
-  getAccessToken().then((token) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://tab-archive.app/hook", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("Authorization", `Bearer ${token}`);
-    xhr.addEventListener("load", () => {
-      const resp = xhr.response;
-      if (resp.error) {
-        console.error(resp.error);
-        return;
-      }
+async function uploadTab(tab) {
+  if (await canSync()) {
+    getAccessToken().then((token) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "https://tab-archive.app/hook", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+      xhr.addEventListener("load", () => {
+        const resp = xhr.response;
+        if (resp.error) {
+          console.error(resp.error);
+          return;
+        }
 
-      console.log("uploaded", resp);
+        console.log("uploaded", resp);
+      });
+      xhr.send(JSON.stringify(tab));
     });
-    xhr.send(JSON.stringify(tab));
-  });
+  }
 }
 
 export function alarmListener(alarm) {
@@ -41,9 +45,11 @@ export function alarmListener(alarm) {
   // Get the whole storage
   browser.storage.local.get(null).then((result) => {
     for (const [key, t] of Object.entries(result)) {
-      uploadTab(t);
-
-      browser.storage.local.remove(key);
+      if (key !== configKey) {
+        uploadTab(t).then(() => {
+          browser.storage.local.remove(key);
+        });
+      }
     }
   });
 }
