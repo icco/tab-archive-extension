@@ -22,11 +22,10 @@ export async function setConfigOption(key, value) {
   if (!config) {
     config = {};
   }
-
-  if (config[configKey]) {
-    delete config[configKey];
+  if (!config[configKey]) {
+    config[configKey] = {};
   }
 
-  config[key] = value;
-  return browser.storage.sync.set({[configKey]: config});
+  config[configKey][key] = value;
+  return browser.storage.sync.set(config);
 }
