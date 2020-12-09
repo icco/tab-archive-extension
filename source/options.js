@@ -3,20 +3,20 @@ import {getAccessToken} from "./authorize";
 import {canSync, setConfigOption, configKey} from "./config";
 
 async function collectConsent() {
-  const sync = document.querySelector("sync");
   try {
+    const syncElement = document.querySelector("#sync");
     const checked = await canSync();
     if (checked !== null) {
-      sync.checked = checked;
+      syncElement.checked = checked;
     }
+
+    syncElement.addEventListener("change", (event) => {
+      console.log(event.target);
+      setConfigOption("sync", event.target.checked);
+    });
   } catch (error) {
     console.error(error);
   }
-
-  sync.addEventListener("change", (event) => {
-    console.log(event.target);
-    setConfigOption("sync", event.target.checked);
-  });
 }
 
 async function showLinks() {
