@@ -1,13 +1,13 @@
 import browser from "webextension-polyfill";
 import {getAccessToken} from "./authorize";
-import {canSync,setConfigOption} from "./config";
+import {canSync, setConfigOption} from "./config";
 
 function collectConsent() {
-  let sync = document.querySelector("sync")
-  sync.checked = canSync()
-  sync.addEventListener('change', (event) => {
+  const sync = document.querySelector("sync");
+  sync.checked = canSync();
+  sync.addEventListener("change", (event) => {
     console.log(event.target);
-    setConfigOption("sync", event.target.checked)
+    setConfigOption("sync", event.target.checked);
   });
 }
 
