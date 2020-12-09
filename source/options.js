@@ -2,7 +2,7 @@ import browser from "webextension-polyfill";
 import {getAccessToken} from "./authorize";
 import {canSync, setConfigOption} from "./config";
 
-function collectConsent() {
+async function collectConsent() {
   const sync = document.querySelector("sync");
   sync.checked = await canSync();
   sync.addEventListener("change", (event) => {

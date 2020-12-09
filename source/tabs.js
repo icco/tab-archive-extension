@@ -16,7 +16,7 @@ function saveTab(tab) {
   });
 }
 
-function uploadTab(tab) {
+async function uploadTab(tab) {
   if (await canSync()) {
     getAccessToken().then((token) => {
       const xhr = new XMLHttpRequest();
@@ -43,9 +43,9 @@ export function alarmListener(alarm) {
   }
 
   // Get the whole storage
-  browser.storage.local.get(null).then((result) => {
+  browser.storage.local.get(null).then(async (result) => {
     for (const [key, t] of Object.entries(result)) {
-      uploadTab(t);
+      await uploadTab(t);
 
       browser.storage.local.remove(key);
     }
