@@ -1,6 +1,6 @@
 import browser from "webextension-polyfill";
 import {getAccessToken} from "./authorize";
-import {canSync} from "./config";
+import {canSync, configKey} from "./config";
 
 function saveTab(tab) {
   const data = {
@@ -45,9 +45,11 @@ export function alarmListener(alarm) {
   // Get the whole storage
   browser.storage.local.get(null).then((result) => {
     for (const [key, t] of Object.entries(result)) {
-      uploadTab(t).then(() => {
-        browser.storage.local.remove(key);
-      });
+      if (key !== configKey) {
+        uploadTab(t).then(() => {
+          browser.storage.local.remove(key);
+        });
+      }
     }
   });
 }

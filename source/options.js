@@ -1,6 +1,6 @@
 import browser from "webextension-polyfill";
 import {getAccessToken} from "./authorize";
-import {canSync, setConfigOption} from "./config";
+import {canSync, setConfigOption, configKey} from "./config";
 
 async function collectConsent() {
   const sync = document.querySelector("sync");
@@ -23,9 +23,11 @@ async function showLinks() {
   const ul = document.querySelector("#list");
   browser.storage.local.get(null).then((result) => {
     console.log("got from storage", result);
-    for (const t of Object.values(result)) {
-      const element = createLink(t);
-      ul.append(element);
+    for (const [key, t] of Object.entries(result)) {
+      if (key !== configKey) {
+        const element = createLink(t);
+        ul.append(element);
+      }
     }
   });
 

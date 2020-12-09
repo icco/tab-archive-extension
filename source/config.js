@@ -1,6 +1,6 @@
 import browser from "webextension-polyfill";
 
-const configKey = "tab-archive-config";
+export const configKey = "tab-archive-config";
 
 export async function canSync() {
   try {
@@ -19,7 +19,7 @@ export async function canSync() {
 }
 
 export async function getConfig() {
-  return browser.storage.sync.get(configKey);
+  return browser.storage.local.get(configKey);
 }
 
 export async function setConfigOption(key, value) {
@@ -33,5 +33,5 @@ export async function setConfigOption(key, value) {
   }
 
   config[configKey][key] = value;
-  return browser.storage.sync.set(config);
+  return browser.storage.local.set(config);
 }
