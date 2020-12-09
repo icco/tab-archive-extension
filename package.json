@@ -17,9 +17,6 @@
     "envs": [
       "browser"
     ],
-    "globals": [
-      "browser"
-    ],
     "ignores": [
       "distribution"
     ],
