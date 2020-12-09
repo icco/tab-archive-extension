@@ -11,7 +11,7 @@ async function collectConsent() {
   });
 }
 
-function showLinks() {
+async function showLinks() {
   const ul = document.querySelector("#list");
   browser.storage.local.get(null).then((result) => {
     console.log("got from storage", result);
@@ -21,30 +21,32 @@ function showLinks() {
     }
   });
 
-  getAccessToken().then((token) => {
-    console.log("got token", token);
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://tab-archive.app/archive", true);
-    xhr.responseType = "json";
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.setRequestHeader("Authorization", `Bearer ${token}`);
-    xhr.addEventListener("load", () => {
-      const resp = xhr.response;
-      if (resp.error) {
-        console.error(resp.error);
-        return;
-      }
+  if (await canSync()) {
+    getAccessToken().then((token) => {
+      console.log("got token", token);
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", "https://tab-archive.app/archive", true);
+      xhr.responseType = "json";
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+      xhr.addEventListener("load", () => {
+        const resp = xhr.response;
+        if (resp.error) {
+          console.error(resp.error);
+          return;
+        }
 
-      resp.tabs
-        .map((t) => {
-          return createLink(t);
-        })
-        .forEach((element) => {
-          ul.append(element);
-        });
+        resp.tabs
+          .map((t) => {
+            return createLink(t);
+          })
+          .forEach((element) => {
+            ul.append(element);
+          });
+      });
+      xhr.send();
     });
-    xhr.send();
-  });
+  }
 }
 
 function createLink(object) {
