@@ -10,13 +10,14 @@ function saveTab(tab) {
     seen: new Date().toJSON()
   };
 
+  console.log("saving", data)
   browser.storage.local.set({[tab.url]: data}).then(() => {
     console.log("saved");
   });
 }
 
 function uploadTab(tab) {
-  if (canSync()) {
+  if (await canSync()) {
     getAccessToken().then((token) => {
       const xhr = new XMLHttpRequest();
       xhr.open("POST", "https://tab-archive.app/hook", true);

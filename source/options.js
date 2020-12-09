@@ -4,7 +4,7 @@ import {canSync, setConfigOption} from "./config";
 
 function collectConsent() {
   const sync = document.querySelector("sync");
-  sync.checked = canSync();
+  sync.checked = await canSync();
   sync.addEventListener("change", (event) => {
     console.log(event.target);
     setConfigOption("sync", event.target.checked);
