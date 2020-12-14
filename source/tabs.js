@@ -13,7 +13,7 @@ function saveTab(tab) {
   console.log("saving", data);
   browser.storage.local.set({[tab.url]: data}).then(() => {
     console.log("saved");
-  });
+  }, onError);
 }
 
 async function uploadTab(tab) {
@@ -33,7 +33,7 @@ async function uploadTab(tab) {
         console.log("uploaded", resp);
       });
       xhr.send(JSON.stringify(tab));
-    });
+    }, onError);
   }
 }
 
@@ -51,7 +51,7 @@ export function alarmListener(alarm) {
         });
       }
     }
-  });
+  }, onError);
 }
 
 export function browserActionListener(_tab) {
@@ -62,5 +62,12 @@ export function browserActionListener(_tab) {
     });
   });
 
-  browser.runtime.openOptionsPage();
+  browser.tabs.create({
+    active: true,
+    url: "options.html",
+  }).then((tab) => { console.log("Created new tab", tab)}, onError);
+}
+
+function onError(error) {
+  console.error(`Error: ${error}`);
 }

@@ -15,10 +15,6 @@
     "128": "icon.png"
   },
   "permissions": ["alarms", "identity", "storage", "tabs"],
-  "options_ui": {
-    "open_in_tab": true,
-    "page": "options.html"
-  },
   "background": {
     "persistent": false,
     "scripts": ["background.js"]
