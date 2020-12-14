@@ -62,10 +62,14 @@ export function browserActionListener(_tab) {
     });
   });
 
-  browser.tabs.create({
-    active: true,
-    url: "options.html",
-  }).then((tab) => { console.log("Created new tab", tab)}, onError);
+  browser.tabs
+    .create({
+      active: true,
+      url: "options.html"
+    })
+    .then((tab) => {
+      console.log("Created new tab", tab);
+    }, onError);
 }
 
 function onError(error) {
