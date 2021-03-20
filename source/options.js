@@ -1,6 +1,6 @@
 import browser from "webextension-polyfill";
-import {getAccessToken} from "./authorize";
-import {canSync, setConfigOption, configKey} from "./config";
+import {getAccessToken} from "./authorize.js";
+import {canSync, setConfigOption, configKey} from "./config.js";
 
 async function collectConsent() {
   try {
@@ -46,13 +46,11 @@ async function showLinks() {
           return;
         }
 
-        resp.tabs
-          .map((t) => {
-            return createLink(t);
-          })
-          .forEach((element) => {
-            ul.append(element);
-          });
+        for (const element of resp.tabs.map((t) => {
+          return createLink(t);
+        })) {
+          ul.append(element);
+        }
       });
       xhr.send();
     });

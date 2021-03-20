@@ -1,6 +1,6 @@
 import browser from "webextension-polyfill";
-import {getAccessToken} from "./authorize";
-import {canSync, configKey} from "./config";
+import {getAccessToken} from "./authorize.js";
+import {canSync, configKey} from "./config.js";
 
 function saveTab(tab) {
   const data = {
@@ -56,10 +56,10 @@ export function alarmListener(alarm) {
 
 export function browserActionListener(_tab) {
   browser.tabs.query({currentWindow: true}).then((tabs) => {
-    tabs.forEach((tab) => {
+    for (const tab of tabs) {
       saveTab(tab);
       browser.tabs.remove(tab.id);
-    });
+    }
   });
 
   browser.tabs
