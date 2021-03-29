@@ -13,6 +13,7 @@ async function collectConsent() {
     syncElement.addEventListener("change", (event) => {
       console.log(event.target);
       setConfigOption("sync", event.target.checked);
+      getAccessToken(true)
     });
   } catch (error) {
     console.error(error);
@@ -32,7 +33,7 @@ async function showLinks() {
   });
 
   if (await canSync()) {
-    getAccessToken().then((token) => {
+    getAccessToken(false).then((token) => {
       console.log("got token", token);
       const xhr = new XMLHttpRequest();
       xhr.open("GET", "https://tab-archive.app/archive", true);

@@ -67,13 +67,13 @@ Authenticate and authorize using browser.identity.launchWebAuthFlow().
 If successful, this resolves with a redirectURL string that contains
 an access token.
 */
-function authorize() {
+function authorize(interactive) {
   return browser.identity.launchWebAuthFlow({
-    interactive: true,
+    interactive,
     url: AUTH_URL
   });
 }
 
-export function getAccessToken() {
-  return authorize().then(validate);
+export function getAccessToken(click) {
+  return authorize(click).then(validate);
 }
