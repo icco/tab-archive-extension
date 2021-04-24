@@ -13,7 +13,7 @@ async function collectConsent() {
     syncElement.addEventListener("change", (event) => {
       console.log(event.target);
       setConfigOption("sync", event.target.checked);
-      getAccessToken(true)
+      getAccessToken(true);
     });
   } catch (error) {
     console.error(error);
