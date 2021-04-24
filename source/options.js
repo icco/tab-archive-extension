@@ -1,5 +1,5 @@
 import browser from "webextension-polyfill";
-import {getAccessToken} from "./authorize.js";
+import {getAccessToken} from "./auth.js";
 import {canSync, setConfigOption, configKey} from "./config.js";
 
 async function collectConsent() {
@@ -33,7 +33,8 @@ async function showLinks() {
   });
 
   if (await canSync()) {
-    getAccessToken(false).then((token) => {
+    const token = getAccessToken()
+    if (token) {
       console.log("got token", token);
       const xhr = new XMLHttpRequest();
       xhr.open("GET", "https://tab-archive.app/archive", true);
@@ -54,7 +55,7 @@ async function showLinks() {
         }
       });
       xhr.send();
-    });
+    };
   }
 }
 

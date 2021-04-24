@@ -1,8 +1,13 @@
 import {qs} from "url-parse";
 import browser from "webextension-polyfill";
 
+function getAccessToken() {
+  const authResult = JSON.parse(localStorage.authResult || '{}');
+  return authResult.access_token
+}
+
 class Client {
-  getAuthResult(url, interactive) {
+  async getAuthResult(url, interactive) {
     return new Promise((resolve, reject) => {
       browser.identity.launchWebAuthFlow({url, interactive}, (callbackURL) => {
         if (browser.runtime.lastError) {
@@ -22,14 +27,6 @@ class Client {
   constructor(domain, clientId) {
     this.domain = domain;
     this.clientId = clientId;
-  }
-
-  async getAuthResult(url, interactive) {
-    throw new Error("Must be implemented by a sub-class");
-  }
-
-  getRedirectURL() {
-    throw new Error("Must be implemented by a sub-class");
   }
 
   async exchangeCodeForToken(code, verifier) {
@@ -83,4 +80,4 @@ class Client {
   }
 }
 
-export {Client};
+export {Client, getAccessToken};
