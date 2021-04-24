@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "path": "^0.12.7",
+    "url-parse": "^1.5.1",
     "webextension-polyfill": "^0.7.0"
   },
   "devDependencies": {
