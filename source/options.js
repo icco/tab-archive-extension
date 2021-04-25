@@ -33,7 +33,7 @@ async function showLinks() {
   });
 
   if (await canSync()) {
-    const token = getAccessToken()
+    const token = getAccessToken();
     if (token) {
       console.log("got token", token);
       const xhr = new XMLHttpRequest();
@@ -55,7 +55,7 @@ async function showLinks() {
         }
       });
       xhr.send();
-    };
+    }
   }
 }
 

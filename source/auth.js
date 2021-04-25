@@ -2,8 +2,8 @@ import {qs} from "url-parse";
 import browser from "webextension-polyfill";
 
 function getAccessToken() {
-  const authResult = JSON.parse(localStorage.authResult || '{}');
-  return authResult.access_token
+  const authResult = JSON.parse(localStorage.authResult || "{}");
+  return authResult.access_token;
 }
 
 class Client {

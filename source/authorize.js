@@ -16,7 +16,7 @@ browser.runtime.onMessage.addListener((event) => {
       device: "browser-extension"
     };
 
-    new Client(env.AUTH0_DOMAIN, env.AUTH0_CLIENT_ID)
+    new Client(AUTH0_DOMAIN, AUTH0_CLIENT_ID)
       .authenticate(options)
       .then((authResult) => {
         localStorage.authResult = JSON.stringify(authResult);
