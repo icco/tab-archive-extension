@@ -9,7 +9,7 @@
     "lint:manifest": "run-s build 'web-ext lint -s distribution'",
     "lint:js": "xo --fix",
     "test": "run-s lint build",
-    "watch": "webpack --watch",
+    "watch": "webpack --mode=development --watch",
     "web-ext": "web-ext"
   },
   "engines": {
