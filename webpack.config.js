@@ -1,5 +1,4 @@
 const path = require("path");
-const SizePlugin = require("size-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
@@ -16,8 +15,13 @@ module.exports = {
     path: output,
     filename: "[name].js"
   },
+  resolve: {
+    fallback: {
+      crypto: require.resolve("crypto-browserify"),
+      "stream": require.resolve("stream-browserify")
+    }
+  },
   plugins: [
-    new SizePlugin(),
     new CopyWebpackPlugin({
       patterns: [
         {

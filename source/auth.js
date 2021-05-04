@@ -1,9 +1,16 @@
 import Url from "url-parse";
 import browser from "webextension-polyfill";
+import * as cjs from "crypto-js";
 
 function getAccessToken() {
   const authResult = JSON.parse(localStorage.authResult || "{}");
   return authResult.access_token;
+}
+
+function generateRandomChallengePair() {
+  const secret = cjs.base64(cjs.cryptoSecureRandomInt());
+  const hashed = cjs.base64(cjs.sha256(secret));
+  return {secret, hashed};
 }
 
 class Client {

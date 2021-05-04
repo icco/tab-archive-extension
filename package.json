@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "webpack --mode=production",
+    "build": "webpack",
     "release:chrome": "cd distribution && webstore upload --auto-publish --extension_id hijjmpfjnehoambihadpebliilognmll",
     "release:firefox": "cd distribution && web-ext-submit",
     "lint": "run-p lint:*",
@@ -9,8 +9,11 @@
     "lint:manifest": "run-s build 'web-ext lint -s distribution'",
     "lint:js": "xo --fix",
     "test": "run-s lint build",
-    "watch": "webpack --mode=development --watch",
+    "watch": "webpack --watch",
     "web-ext": "web-ext"
+  },
+  "engines": {
+    "node": ">= 14"
   },
   "xo": {
     "envs": [
@@ -26,7 +29,9 @@
     "extends": "stylelint-config-xo"
   },
   "dependencies": {
+    "crypto-js": "^4.0.0",
     "path": "^0.12.7",
+    "stream-browserify": "^3.0.0",
     "url-parse": "^1.5.1",
     "webextension-polyfill": ">= 0.7.0"
   },
@@ -37,7 +42,6 @@
     "dot-json": "^1.1.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.0",
-    "size-plugin": "^3.0.0",
     "stylelint": "^13.8.0",
     "stylelint-config-xo": "^0.20.0",
     "terser-webpack-plugin": "^5.0.0",
