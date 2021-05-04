@@ -21,7 +21,7 @@ async function saveTab(tab) {
 
 async function uploadTab(tab) {
   if (await canSync()) {
-    const token = getAccessToken();
+    const token = await getAccessToken();
 
     if (!token) {
       console.error("not logged in");
