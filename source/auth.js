@@ -1,4 +1,4 @@
-import {qs} from "url-parse";
+import Url from "url-parse";
 import browser from "webextension-polyfill";
 
 function getAccessToken() {
@@ -52,7 +52,7 @@ class Client {
   }
 
   extractCode(resultUrl) {
-    const response = parse(resultUrl, true).query;
+    const response = new Url(resultUrl, true).query;
 
     if (response.error) {
       throw new Error(response.error_description || response.error);
@@ -73,7 +73,7 @@ class Client {
       response_type: "code"
     });
 
-    const url = `https://${domain}/authorize?${qs.stringify(options)}`;
+    const url = `https://${domain}/authorize?${Url.qs.stringify(options)}`;
     const resultUrl = await this.getAuthResult(url, interactive);
     const code = this.extractCode(resultUrl);
     return this.exchangeCodeForToken(code, secret);

@@ -6,6 +6,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const output = path.join(__dirname, "distribution");
 
 module.exports = {
+  mode: "production",
   devtool: "source-map",
   entry: {
     background: "./source/background.js",
