@@ -22,7 +22,8 @@ async function collectConsent() {
 
 async function showLinks() {
   const ul = document.querySelector("#list");
-  browser.storage.local.get(null).then((result) => {
+  try {
+    const result = await browser.storage.local.get(null);
     console.log("got from storage", result);
     for (const [key, t] of Object.entries(result)) {
       if (key !== configKey) {
@@ -30,32 +31,34 @@ async function showLinks() {
         ul.append(element);
       }
     }
-  });
 
-  if (await canSync()) {
-    const token = getAccessToken();
-    if (token) {
-      console.log("got token", token);
-      const xhr = new XMLHttpRequest();
-      xhr.open("GET", "https://tab-archive.app/archive", true);
-      xhr.responseType = "json";
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.setRequestHeader("Authorization", `Bearer ${token}`);
-      xhr.addEventListener("load", () => {
-        const resp = xhr.response;
-        if (resp.error) {
-          console.error(resp.error);
-          return;
-        }
+    if (await canSync()) {
+      const token = getAccessToken();
+      if (token) {
+        console.log("got token", token);
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://tab-archive.app/archive", true);
+        xhr.responseType = "json";
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+        xhr.addEventListener("load", () => {
+          const resp = xhr.response;
+          if (resp.error) {
+            console.error(resp.error);
+            return;
+          }
 
-        for (const element of resp.tabs.map((t) => {
-          return createLink(t);
-        })) {
-          ul.append(element);
-        }
-      });
-      xhr.send();
+          for (const element of resp.tabs.map((t) => {
+            return createLink(t);
+          })) {
+            ul.append(element);
+          }
+        });
+        xhr.send();
+      }
     }
+  } catch (error) {
+    console.error(error);
   }
 }
 

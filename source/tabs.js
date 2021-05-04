@@ -2,7 +2,7 @@ import browser from "webextension-polyfill";
 import {getAccessToken} from "./auth.js";
 import {canSync, configKey} from "./config.js";
 
-function saveTab(tab) {
+async function saveTab(tab) {
   const data = {
     url: tab.url,
     title: tab.title,
@@ -11,9 +11,12 @@ function saveTab(tab) {
   };
 
   console.log("saving", data);
-  browser.storage.local.set({[tab.url]: data}).then(() => {
-    console.log("saved");
-  }, onError);
+  try {
+    const resp = await browser.storage.local.set({[tab.url]: data});
+    console.log("saved", resp);
+  } catch (error) {
+    onError(error);
+  }
 }
 
 async function uploadTab(tab) {
@@ -38,39 +41,43 @@ async function uploadTab(tab) {
   }
 }
 
-export function alarmListener(alarm) {
+export async function alarmListener(alarm) {
   if (alarm.name !== "upload") {
     return;
   }
 
   // Get the whole storage
-  browser.storage.local.get(null).then((result) => {
+  try {
+    const result = await browser.storage.local.get(null);
+    const results = [];
     for (const [key, t] of Object.entries(result)) {
       if (key !== configKey) {
-        uploadTab(t).then(() => {
-          browser.storage.local.remove(key);
-        });
+        results.push(uploadTab(t), browser.storage.local.remove(key));
       }
     }
-  }, onError);
+
+    await Promise.all(results);
+  } catch (error) {
+    onError(error);
+  }
 }
 
-export function browserActionListener(_tab) {
-  browser.tabs.query({currentWindow: true}).then((tabs) => {
+export async function browserActionListener(_tab) {
+  try {
+    const tabs = await browser.tabs.query({currentWindow: true});
     for (const tab of tabs) {
       saveTab(tab);
       browser.tabs.remove(tab.id);
     }
-  });
 
-  browser.tabs
-    .create({
+    const tab = await browser.tabs.create({
       active: true,
       url: "options.html"
-    })
-    .then((tab) => {
-      console.log("Created new tab", tab);
-    }, onError);
+    });
+    console.log("Created new tab", tab);
+  } catch (error) {
+    onError(error);
+  }
 }
 
 function onError(error) {
