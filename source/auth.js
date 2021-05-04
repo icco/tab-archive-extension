@@ -3,8 +3,8 @@ import {Auth0Client} from "@auth0/auth0-spa-js";
 
 async function getAccessToken() {
   try {
-    const redirectUrl = browser.identity.getRedirectURL()
-    console.log("redirect url", redirectUrl)
+    const redirectUrl = browser.identity.getRedirectURL();
+    console.log("redirect url", redirectUrl);
     const auth0 = new Auth0Client({
       domain: "icco.auth0.com",
       client_id: "36p26vDCvt4RvZKJnGKTzsfyH4pSCsqg",

@@ -25,6 +25,10 @@
     "prettier": true,
     "space": true
   },
+  "prettier": {
+    "trailingComma": "all",
+    "singleQuote": false
+  },
   "stylelint": {
     "extends": "stylelint-config-xo"
   },

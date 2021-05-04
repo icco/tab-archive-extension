@@ -18,7 +18,7 @@ browser.runtime.onMessage.addListener(async (event) => {
         client_id: "36p26vDCvt4RvZKJnGKTzsfyH4pSCsqg",
         cacheLocation: "localstorage",
         useRefreshTokens: true,
-        redirect_uri: browser.identity.getRedirectURL()
+        redirect_uri: browser.identity.getRedirectURL(),
       });
 
       await auth0.loginWithPopup({});

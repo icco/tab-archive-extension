@@ -7,7 +7,7 @@ async function saveTab(tab) {
     url: tab.url,
     title: tab.title,
     favicon: tab.favIconUrl,
-    seen: new Date().toJSON()
+    seen: new Date().toJSON(),
   };
 
   console.log("saving", data);
@@ -77,7 +77,7 @@ export async function browserActionListener(_tab) {
 
     const tab = await browser.tabs.create({
       active: true,
-      url: "options.html"
+      url: "options.html",
     });
     console.log("Created new tab", tab);
   } catch (error) {

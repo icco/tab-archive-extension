@@ -9,17 +9,17 @@ module.exports = {
   devtool: "source-map",
   entry: {
     background: "./source/background.js",
-    options: "./source/options.js"
+    options: "./source/options.js",
   },
   output: {
     path: output,
-    filename: "[name].js"
+    filename: "[name].js",
   },
   resolve: {
     fallback: {
       crypto: require.resolve("crypto-browserify"),
-      stream: require.resolve("stream-browserify")
-    }
+      stream: require.resolve("stream-browserify"),
+    },
   },
   plugins: [
     new CopyWebpackPlugin({
@@ -28,11 +28,11 @@ module.exports = {
           from: "**/*",
           context: "source",
           globOptions: {
-            ignore: ["*.js"]
-          }
-        }
-      ]
-    })
+            ignore: ["*.js"],
+          },
+        },
+      ],
+    }),
   ],
   optimization: {
     minimizer: [
@@ -42,10 +42,10 @@ module.exports = {
           compress: false,
           output: {
             beautify: true,
-            indent_level: 2 // eslint-disable-line camelcase
-          }
-        }
-      })
-    ]
-  }
+            indent_level: 2, // eslint-disable-line camelcase
+          },
+        },
+      }),
+    ],
+  },
 };
