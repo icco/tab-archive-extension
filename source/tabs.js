@@ -12,8 +12,8 @@ async function saveTab(tab) {
 
   console.log("saving", data);
   try {
-    const resp = await browser.storage.local.set({[tab.url]: data});
-    console.log("saved", resp);
+    await browser.storage.local.set({[tab.url]: data});
+    console.log("saved");
   } catch (error) {
     onError(error);
   }

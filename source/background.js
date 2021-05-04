@@ -31,12 +31,7 @@ browser.runtime.onMessage.addListener(async (event) => {
       localStorage.authResult = JSON.stringify(authResult);
       console.log("authed!");
     } catch (error) {
-      await browser.notifications.create({
-        type: "basic",
-        title: "Login Failed",
-        message: error.message,
-        iconUrl: "icons/icon128.png"
-      });
+      console.error("auth error", error)
     }
   }
 });

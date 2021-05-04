@@ -64,7 +64,7 @@ async function showLinks() {
       xhr.send();
     }
   } catch (error) {
-    console.error(error);
+    console.error("show links error", error);
   }
 }
 
