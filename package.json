@@ -29,10 +29,9 @@
     "extends": "stylelint-config-xo"
   },
   "dependencies": {
-    "crypto-js": "^4.0.0",
+    "@auth0/auth0-spa-js": "^1.15.0",
     "path": "^0.12.7",
     "stream-browserify": "^3.0.0",
-    "url-parse": "^1.5.1",
     "webextension-polyfill": ">= 0.7.0"
   },
   "devDependencies": {

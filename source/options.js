@@ -10,10 +10,10 @@ async function collectConsent() {
       syncElement.checked = checked;
     }
 
-    syncElement.addEventListener("change", (event) => {
+    syncElement.addEventListener("change", async (event) => {
       console.log(event.target);
       setConfigOption("sync", event.target.checked);
-      getAccessToken();
+      await getAccessToken();
     });
   } catch (error) {
     console.error(error);
@@ -33,7 +33,7 @@ async function showLinks() {
     }
 
     if (await canSync()) {
-      const token = getAccessToken();
+      const token = await getAccessToken();
       console.log("tok", token);
 
       if (!token) {
