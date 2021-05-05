@@ -13,7 +13,7 @@ browser.runtime.onMessage.addListener(async (event) => {
   console.log("message recv", event);
   if (event.type === "authenticate") {
     try {
-      const auth0 = getAuthClient()
+      const auth0 = getAuthClient();
       await auth0.loginWithPopup({});
     } catch (error) {
       console.error("auth error", error);
