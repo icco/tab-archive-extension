@@ -8,8 +8,11 @@ module.exports = {
   mode: "production",
   devtool: "source-map",
   entry: {
+    auth: "./source/auth.js",
     background: "./source/background.js",
+    config: "./source/config.js",
     options: "./source/options.js",
+    tabs: "./source/tabs.js",
   },
   output: {
     path: output,

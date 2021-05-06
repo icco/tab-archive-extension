@@ -19,13 +19,5 @@
     "persistent": false,
     "scripts": ["background.js"]
   },
-  "browser_action": {},
-  "oauth2": {
-    "client_id": "172305384164-btta42bf23h342eo59p5h9r3gdrhckcj.apps.googleusercontent.com",
-    "scopes": [
-      "openid",
-      "https://www.googleapis.com/auth/userinfo.profile",
-      "https://www.googleapis.com/auth/userinfo.email"
-    ]
-  }
+  "browser_action": {}
 }
