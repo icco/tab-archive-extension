@@ -3,12 +3,30 @@ import {Auth0Client} from "@auth0/auth0-spa-js";
 
 async function getAccessToken() {
   try {
-    const auth0 = getAuthClient();
-    return await auth0.getTokenSilently({});
+    return await launchAuthFlow(false);
   } catch (error) {
-    console.error("auth error", error);
+    console.error("async auth error", error);
     return null;
   }
+}
+
+async function login() {
+  try {
+    return await launchAuthFlow(true);
+  } catch (error) {
+    console.error("sync auth error", error);
+    return null;
+  }
+}
+
+async function launchAuthFlow(interactive) {
+  const auth0 = getAuthClient();
+  const url = await auth0.buildAuthorizeUrl({});
+
+  return browser.identity.launchWebAuthFlow({
+    url,
+    interactive,
+  });
 }
 
 function getAuthClient() {
@@ -26,4 +44,4 @@ function getAuthClient() {
   /* eslint-enable camelcase */
 }
 
-export {getAuthClient, getAccessToken};
+export {login, getAccessToken};

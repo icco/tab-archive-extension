@@ -1,4 +1,4 @@
-import {getAuthClient} from "./auth.js";
+import {login} from "./auth.js";
 import {browserActionListener, alarmListener} from "./tabs.js";
 import browser from "webextension-polyfill";
 
@@ -13,8 +13,7 @@ browser.runtime.onMessage.addListener(async (event) => {
   console.log("message recv", event);
   if (event.type === "authenticate") {
     try {
-      const auth0 = getAuthClient();
-      await auth0.loginWithPopup({});
+      await login();
     } catch (error) {
       console.error("auth error", error);
     }
