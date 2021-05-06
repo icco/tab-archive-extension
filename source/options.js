@@ -1,6 +1,7 @@
 import browser from "webextension-polyfill";
-import {getAccessToken} from "./authorize.js";
 import {canSync, setConfigOption, configKey} from "./config.js";
+import {getAccessToken} from "./auth.js";
+import {syncAll} from "./tabs.js";
 
 async function collectConsent() {
   try {
@@ -10,10 +11,29 @@ async function collectConsent() {
       syncElement.checked = checked;
     }
 
-    syncElement.addEventListener("change", (event) => {
+    syncElement.addEventListener("change", async (event) => {
       console.log(event.target);
       setConfigOption("sync", event.target.checked);
-      getAccessToken(true)
+      await getAccessToken();
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function forceSync() {
+  try {
+    const forceElement = document.querySelector("#force");
+
+    forceElement.addEventListener("click", async (_event) => {
+      const checked = await canSync();
+      if (!checked) {
+        console.error("sync not enabled");
+        return;
+      }
+
+      await getAccessToken();
+      await syncAll();
     });
   } catch (error) {
     console.error(error);
@@ -22,7 +42,8 @@ async function collectConsent() {
 
 async function showLinks() {
   const ul = document.querySelector("#list");
-  browser.storage.local.get(null).then((result) => {
+  try {
+    const result = await browser.storage.local.get(null);
     console.log("got from storage", result);
     for (const [key, t] of Object.entries(result)) {
       if (key !== configKey) {
@@ -30,10 +51,17 @@ async function showLinks() {
         ul.append(element);
       }
     }
-  });
 
-  if (await canSync()) {
-    getAccessToken(false).then((token) => {
+    if (await canSync()) {
+      const token = await getAccessToken();
+      console.log("tok", token);
+
+      if (!token) {
+        console.error("not logged in");
+        await browser.runtime.sendMessage({type: "authenticate"});
+        return;
+      }
+
       console.log("got token", token);
       const xhr = new XMLHttpRequest();
       xhr.open("GET", "https://tab-archive.app/archive", true);
@@ -54,7 +82,9 @@ async function showLinks() {
         }
       });
       xhr.send();
-    });
+    }
+  } catch (error) {
+    console.error("show links error", error);
   }
 }
 
@@ -84,6 +114,7 @@ function createLink(object) {
 
 function onLoad() {
   collectConsent();
+  forceSync();
   showLinks();
 }
 
