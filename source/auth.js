@@ -22,22 +22,24 @@ async function login() {
 async function launchAuthFlow(interactive) {
   const auth0 = getAuthClient();
   const url = await auth0.buildAuthorizeUrl({});
-
-  return browser.identity.launchWebAuthFlow({
+  const resp = await browser.identity.launchWebAuthFlow({
     url,
     interactive,
   });
+
+  return auth0.handleRedirectCallback(resp);
 }
 
 function getAuthClient() {
   const redirectUrl = browser.identity.getRedirectURL();
   console.log("redirect url", redirectUrl);
 
+  // https://auth0.github.io/auth0-spa-js/
   /* eslint-disable camelcase */
   return new Auth0Client({
     domain: "icco.auth0.com",
     client_id: "36p26vDCvt4RvZKJnGKTzsfyH4pSCsqg",
-    cacheLocation: "localstorage",
+    cacheLocation: "memory",
     useRefreshTokens: true,
     redirect_uri: redirectUrl,
   });
