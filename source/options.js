@@ -1,6 +1,7 @@
 import browser from "webextension-polyfill";
-import {getAccessToken} from "./auth.js";
 import {canSync, setConfigOption, configKey} from "./config.js";
+import {getAccessToken} from "./auth.js";
+import {syncAll} from "./tabs.js";
 
 async function collectConsent() {
   try {
@@ -14,6 +15,25 @@ async function collectConsent() {
       console.log(event.target);
       setConfigOption("sync", event.target.checked);
       await getAccessToken();
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+async function forceSync() {
+  try {
+    const forceElement = document.querySelector("#force");
+
+    forceElement.addEventListener("click", async (_event) => {
+      const checked = await canSync();
+      if (!checked) {
+        console.error("sync not enabled");
+        return;
+      }
+
+      await getAccessToken();
+      await syncAll();
     });
   } catch (error) {
     console.error(error);
@@ -94,6 +114,7 @@ function createLink(object) {
 
 function onLoad() {
   collectConsent();
+  forceSync();
   showLinks();
 }
 

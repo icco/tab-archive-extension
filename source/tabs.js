@@ -51,20 +51,23 @@ export async function alarmListener(alarm) {
     return;
   }
 
-  // Get the whole storage
   try {
-    const result = await browser.storage.local.get(null);
-    const results = [];
-    for (const [key, t] of Object.entries(result)) {
-      if (key !== configKey) {
-        results.push(uploadTab(t), browser.storage.local.remove(key));
-      }
-    }
-
-    await Promise.all(results);
+    await syncAll();
   } catch (error) {
     onError(error);
   }
+}
+
+export async function syncAll() {
+  const result = await browser.storage.local.get(null);
+  const results = [];
+  for (const [key, t] of Object.entries(result)) {
+    if (key !== configKey) {
+      results.push(uploadTab(t), browser.storage.local.remove(key));
+    }
+  }
+
+  await Promise.all(results);
 }
 
 export async function browserActionListener(_tab) {
