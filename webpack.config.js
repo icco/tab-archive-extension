@@ -1,33 +1,41 @@
 const path = require("path");
-const SizePlugin = require("size-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 const output = path.join(__dirname, "distribution");
 
 module.exports = {
+  mode: "production",
   devtool: "source-map",
   entry: {
+    auth: "./source/auth.js",
     background: "./source/background.js",
-    options: "./source/options.js"
+    config: "./source/config.js",
+    options: "./source/options.js",
+    tabs: "./source/tabs.js",
   },
   output: {
     path: output,
-    filename: "[name].js"
+    filename: "[name].js",
+  },
+  resolve: {
+    fallback: {
+      crypto: require.resolve("crypto-browserify"),
+      stream: require.resolve("stream-browserify"),
+    },
   },
   plugins: [
-    new SizePlugin(),
     new CopyWebpackPlugin({
       patterns: [
         {
           from: "**/*",
           context: "source",
           globOptions: {
-            ignore: ["*.js"]
-          }
-        }
-      ]
-    })
+            ignore: ["*.js"],
+          },
+        },
+      ],
+    }),
   ],
   optimization: {
     minimizer: [
@@ -37,10 +45,10 @@ module.exports = {
           compress: false,
           output: {
             beautify: true,
-            indent_level: 2 // eslint-disable-line camelcase
-          }
-        }
-      })
-    ]
-  }
+            indent_level: 2, // eslint-disable-line camelcase
+          },
+        },
+      }),
+    ],
+  },
 };
